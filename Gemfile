@@ -9,3 +9,4 @@ gem 'rest-client' # http
 gemspec
 
 gem 'rspec'
+gem 'pry'
