@@ -1,10 +1,4 @@
 require 'remote_factory_girl'
-#require 'remote_factory_girl/config'
-#require 'remote_factory_girl/http'
-#require 'remote_factory_girl/response_parser'
-#require 'remote_factory_girl/config_struct'
-#require 'remote_factory_girl/hash_to_dot'
-
 
 describe RemoteFactoryGirl do
 
