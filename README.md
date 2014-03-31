@@ -1,6 +1,13 @@
 # RemoteFactoryGirl
 
-TODO: Write a gem description
+Create FactoryGirl factories remotely. 
+
+Integration testing SOA (Software Oriented Architecture) apps is an inherently 
+difficult problem (Rails apps included :). SOA is comprised of multiple applications, 
+and while individual apps can be tested (and presumably passing) in isolation (usually by 
+mocking http requests), it does not guarantee they will work in unison. Testing 
+interactions between the apps is more difficult, and this provides a mechanism to 
+do so.  RemoteFactoryGirl creates data needed by the client in the home.
 
 ## Installation
 
