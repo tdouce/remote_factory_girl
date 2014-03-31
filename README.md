@@ -50,6 +50,10 @@ describe User do
 end
 ```
 
+Run tests
+
+    $ rspec
+
 
 ## Contributing
 
