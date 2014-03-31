@@ -41,6 +41,10 @@ module RemoteFactoryGirl
       raise RemoteFactoryGirlConfigError.new("RemoteFactoryGirl.config.home[:host] can not be nil") unless has_home?
     end
 
+    def has_home?
+      !home[:host].nil? && !(home[:host] == '') && !home[:end_point].nil? && !(home[:end_point] == '')
+    end
+
     private
 
     def update_home_config(attrs)
@@ -49,10 +53,6 @@ module RemoteFactoryGirl
 
     def default_config_warning 
       "warning: You are using the default RemoteFactoryGirl configuration. Are you sure this is what you want? Your configuration is: \n #{ to_hash }"
-    end
-
-    def has_home?
-      !home[:host].nil? && !(home[:host] == '') && !home[:end_point].nil? && !(home[:end_point] == '')
     end
   end
 end
