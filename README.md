@@ -30,15 +30,16 @@ Configure in `spec/spec_helper.rb`
 
 Use in specs
 
+```
   require 'spec_helper'
 
   describe User do
-
     it 'creating a user factory in RemoteFactoryGirlHome' do
       user = RemoteFactoryGirl.create(:user, first_name: 'Sam', last_name: 'Iam')
       expect(user.first_name).to eq('Sam')
     end
   end
+```
 
 
 ## Contributing
