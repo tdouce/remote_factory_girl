@@ -26,7 +26,7 @@ module RemoteFactoryGirl
 
   def self.create(factory, attributes = {}, parser = ResponseParser, http = Http)
     factory  = RemoteFactoryGirl.new(factory, attributes)
-    response = http.post(config.home_url, factory.params)
+    response = http.post(config, factory.params)
     parser.parse(response, config.to_hash)
   end
 

@@ -36,7 +36,7 @@ describe RemoteFactoryGirl do
       http   = double('RemoteFactoryGirlFriends::Http', :post => {})
       parser = double('RemoteFactoryGirlFriends::ResponseParser')
       RemoteFactoryGirl.config = config
-      expect(http).to receive(:post).with(config.home_url, { :factory => 'user', :attributes => { :first_name => 'Sam'}})
+      expect(http).to receive(:post).with(config, { :factory => 'user', :attributes => { :first_name => 'Sam'}})
       expect(parser).to receive(:parse).with(http.post, config.to_hash)
       RemoteFactoryGirl.create('user', { :first_name => 'Sam' }, parser, http)
     end

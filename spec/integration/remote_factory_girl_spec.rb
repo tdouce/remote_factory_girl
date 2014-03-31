@@ -99,10 +99,10 @@ describe RemoteFactoryGirl do
 
       it 'should send a post request to home' do
         RemoteFactoryGirl.config.home[:host] = 'localhost'
-        url    = RemoteFactoryGirl.config.home_url
+        config = RemoteFactoryGirl.config
         params = { :factory    => :user, 
                    :attributes => { :first_name => 'Sam', :last_name => 'Iam' } }
-        expect(RemoteFactoryGirl::Http).to receive(:post).with(url, params) 
+        expect(RemoteFactoryGirl::Http).to receive(:post).with(config, params) 
         RemoteFactoryGirl.create(:user, :first_name => 'Sam', :last_name => 'Iam')
       end
     end
