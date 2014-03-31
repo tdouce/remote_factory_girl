@@ -50,9 +50,5 @@ module RemoteFactoryGirl
     def update_home_config(attrs)
       attrs[:home] = DEFAULT_HOME_CONFIG.merge(attrs.fetch(:home, {}))
     end
-
-    def default_config_warning 
-      "warning: You are using the default RemoteFactoryGirl configuration. Are you sure this is what you want? Your configuration is: \n #{ to_hash }"
-    end
   end
 end
