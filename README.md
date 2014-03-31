@@ -29,15 +29,17 @@ Or install it yourself as:
 
 Configure in `spec/spec_helper.rb`
 
-    RemoteFactoryGirl.configure do |config|
-      config.home = { host: 'localhost', port: 5000, end_point: "/over_the_rainbow" }
-      config.return_with_root = false
-      config.return_response_as = :dot_notation
-    end
+```ruby
+RemoteFactoryGirl.configure do |config|
+  config.home = { host: 'localhost', port: 5000, end_point: "/over_the_rainbow" }
+  config.return_with_root = false
+  config.return_response_as = :dot_notation
+end
+```
 
 Use in specs
 
-```
+```ruby
 require 'spec_helper'
 
 describe User do
