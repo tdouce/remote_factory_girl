@@ -6,7 +6,9 @@ TODO: Write a gem description
 
 Add this line to your application's Gemfile:
 
-    gem 'remote_factory_girl'
+    group :test do
+      gem 'remote_factory_girl'
+    end
 
 And then execute:
 
@@ -18,7 +20,26 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Configure in `spec/spec_helper.rb`
+
+    RemoteFactoryGirl.configure do |config|
+      config.home = { host: 'localhost', port: 5000, end_point: "/over_the_rainbow" }
+      config.return_with_root = false
+      config.return_response_as = :dot_notation
+    end
+
+Use in specs
+
+  require 'spec_helper'
+
+  describe User do
+
+    it 'creating a user factory in RemoteFactoryGirlHome' do
+      user = RemoteFactoryGirl.create(:user, first_name: 'Sam', last_name: 'Iam')
+      expect(user.first_name).to eq('Sam')
+    end
+  end
+
 
 ## Contributing
 
