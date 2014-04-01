@@ -7,7 +7,7 @@ module RemoteFactoryGirl
 
     DEFAULT_HOME_CONFIG = { :host      => nil, 
                             :port      => nil, 
-                            :end_point => '/remote_factory_girl_homes' }
+                            :end_point => '/home' }
 
     attribute :home,               Hash,    :default => DEFAULT_HOME_CONFIG
     attribute :return_response_as, Symbol,  :default => :as_hash 

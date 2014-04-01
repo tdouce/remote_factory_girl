@@ -8,7 +8,7 @@ describe RemoteFactoryGirl do
     it 'should be configured with correct defaults' do
       expect(RemoteFactoryGirl.config.home).to eq({ :host      => nil, 
                                                     :port      => nil, 
-                                                    :end_point => '/remote_factory_girl_homes'})
+                                                    :end_point => '/home'})
       expect(RemoteFactoryGirl.config.return_response_as).to eq(:as_hash) 
       expect(RemoteFactoryGirl.config.return_with_root).to be_true 
     end
