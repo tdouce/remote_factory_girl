@@ -1,13 +1,21 @@
 # RemoteFactoryGirl
 
-Create FactoryGirl factories remotely. 
+Create [FactoryGirl](https://github.com/thoughtbot/factory_girl) factories remotely. 
 
 Integration testing SOA (Software Oriented Architecture) apps is an inherently 
 difficult problem (Rails apps included :). SOA is comprised of multiple applications, 
 and while individual apps can be tested (and presumably passing) in isolation (usually by 
 mocking http requests), it does not guarantee they will work in unison. Testing 
-interactions between apps is more difficult, and this provides a mechanism to 
-do so.  RemoteFactoryGirl creates data needed by the client in the home.
+interactions between apps is more difficult. 
+
+One problem with integration testing SOA apps is that it is difficult to create 
+integration tests in the client, because due to the nature of SOA you can not 
+create *just* the data you need when you need it because the data you need resides 
+in another application.  Traditional apps contain a database and tools such as 
+[FactoryGirl](https://github.com/thoughtbot/factory_girl) provide an excellent tool to 
+create *just* the data you need when you need it. RemoteFactoryGirl provides a mechanism, 
+by leveraging [FactoryGirl](https://github.com/thoughtbot/factory_girl), to create data 
+from the client. 
 
 ## Installation
 
