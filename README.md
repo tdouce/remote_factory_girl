@@ -13,9 +13,10 @@ integration tests in the client. Due to the nature of SOA you can not
 create *just* the data you need when you need it because the data you need resides 
 in another application.  Traditional apps contain a database and tools such as 
 [FactoryGirl](https://github.com/thoughtbot/factory_girl) provide an excellent tool to 
-create *just* the data you need when you need it. RemoteFactoryGirl provides a mechanism, 
-by leveraging [FactoryGirl](https://github.com/thoughtbot/factory_girl), to create data 
-from the client. 
+create the data you need when you need it when writing tests. RemoteFactoryGirl,
+when used in conjunction with [RemoteFactoryGirlHome](https://github.com/tdouce/remote_factory_girl_home),
+provide a mechanism to create the data you need when you need it from the client 
+by leveraging the efforts of [FactoryGirl](https://github.com/thoughtbot/factory_girl).
 
 ## Installation
 
