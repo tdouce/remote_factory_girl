@@ -53,7 +53,8 @@ describe User do
 end
 ```
 
-Run tests
+## Run tests
+
 
     $ rspec
 
