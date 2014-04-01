@@ -5,7 +5,7 @@ Create [FactoryGirl](https://github.com/thoughtbot/factory_girl) factories remot
 Integration testing SOA (Software Oriented Architecture) apps is an inherently 
 difficult problem (Rails apps included :). SOA is comprised of multiple applications, 
 and while individual apps can be tested (and presumably passing) in isolation (usually by 
-mocking http requests), it does not guarantee they will work in unison. Testing 
+mocking http requests), it does not guarantee the apps will work in unison. Testing 
 interactions between apps is more difficult. 
 
 One problem with integration testing SOA apps is that it is difficult to write 
