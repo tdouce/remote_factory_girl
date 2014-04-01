@@ -13,9 +13,12 @@ do so.  RemoteFactoryGirl creates data needed by the client in the home.
 
 Add this line to your application's Gemfile:
 
-    group :test do
-      gem 'remote_factory_girl'
-    end
+```ruby
+group :test do
+  gem 'remote_factory_girl'
+end
+```
+
 
 And then execute:
 
