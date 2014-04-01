@@ -10,8 +10,8 @@ interactions between apps is more difficult.
 
 One problem with integration testing SOA apps is that it is difficult to write 
 integration tests in the client. Due to the nature of SOA you can not 
-create the data you need when you need it because the data you need resides 
-in another application.  It is possible to create test data in traditional apps (apps 
+create the data you need when you need it because the database you need to create the data
+resides in another application.  It is possible to create test data in traditional apps (apps 
 that contain a database) with tools such as [FactoryGirl](https://github.com/thoughtbot/factory_girl). 
 However, in SOA apps FactoryGirl alone does not suffice. RemoteFactoryGirl
 when used in conjunction with [RemoteFactoryGirlHome](https://github.com/tdouce/remote_factory_girl_home),
