@@ -33,8 +33,8 @@ describe RemoteFactoryGirl do
   describe '.create' do
     it 'should send http request and parse request' do
       config = double('config', :home_url => 'http://somewhere', :to_hash => {})
-      http   = double('RemoteFactoryGirlFriends::Http', :post => {})
-      parser = double('RemoteFactoryGirlFriends::ResponseParser')
+      http   = double('RemoteFactoryGirl::Http', :post => {})
+      parser = double('RemoteFactoryGirl::ResponseParser')
       RemoteFactoryGirl.config = config
       expect(http).to receive(:post).with(config, { :factory => 'user', :attributes => { :first_name => 'Sam'}})
       expect(parser).to receive(:parse).with(http.post, config.to_hash)
