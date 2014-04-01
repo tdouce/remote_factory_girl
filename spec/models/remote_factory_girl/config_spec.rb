@@ -27,7 +27,7 @@ describe RemoteFactoryGirl::Config do
         config = RemoteFactoryGirl::Config.new
         expect(config.home).to eq({ :host      => nil, 
                                     :port      => nil, 
-                                    :end_point => 'remote_factory_girl_homes'})
+                                    :end_point => '/remote_factory_girl_homes'})
         expect(config.return_response_as).to eq(:as_hash) 
         expect(config.return_with_root).to be_true 
       end
