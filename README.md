@@ -8,8 +8,8 @@ and while individual apps can be tested (and presumably passing) in isolation (u
 mocking http requests), it does not guarantee they will work in unison. Testing 
 interactions between apps is more difficult. 
 
-One problem with integration testing SOA apps is that it is difficult to create 
-integration tests in the client, because due to the nature of SOA you can not 
+One problem with integration testing SOA apps is that it is difficult to write 
+integration tests in the client. Due to the nature of SOA you can not 
 create *just* the data you need when you need it because the data you need resides 
 in another application.  Traditional apps contain a database and tools such as 
 [FactoryGirl](https://github.com/thoughtbot/factory_girl) provide an excellent tool to 
