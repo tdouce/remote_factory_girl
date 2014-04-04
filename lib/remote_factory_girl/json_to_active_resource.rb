@@ -15,8 +15,6 @@ module RemoteFactoryGirl
     def convert
       raise 'ActiveResource not defined' if !defined?(ActiveResource)
 
-      binding.pry
-
       if resource_provided? 
         config[:with].find(id)
       else
