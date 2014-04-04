@@ -4,6 +4,7 @@ require 'remote_factory_girl/http'
 require 'remote_factory_girl/response_parser'
 require 'remote_factory_girl/config_struct'
 require 'remote_factory_girl/hash_to_dot'
+require 'remote_factory_girl/json_to_active_resource'
 
 module RemoteFactoryGirl
   class RemoteFactoryGirl
@@ -25,9 +26,14 @@ module RemoteFactoryGirl
   end
 
   def self.create(factory, attributes = {}, parser = ResponseParser, http = Http)
-    factory  = RemoteFactoryGirl.new(factory, attributes)
+    # TODO can only use except with Rails
+    factory  = RemoteFactoryGirl.new(factory, attributes.except(:with))
     response = http.post(config, factory.params)
-    parser.parse(response, config.to_hash)
+    if config.return_as_active_resource
+      JsonToActiveResource.convert(response, {:with => attributes[:with]})
+    else
+      parser.parse(response, config.to_hash)
+    end
   end
 
   def self.config
