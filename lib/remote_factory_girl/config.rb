@@ -9,9 +9,10 @@ module RemoteFactoryGirl
                             :port      => nil, 
                             :end_point => '/remote_factory_girl/home' }
 
-    attribute :home,               Hash,    :default => DEFAULT_HOME_CONFIG
-    attribute :return_response_as, Symbol,  :default => :as_hash 
-    attribute :return_with_root,   Boolean, :default => true 
+    attribute :home,                      Hash,    :default => DEFAULT_HOME_CONFIG
+    attribute :return_response_as,        Symbol,  :default => :as_hash 
+    attribute :return_with_root,          Boolean, :default => true 
+    attribute :return_as_active_resource, Boolean, :default => false 
 
     def self.configure(configs)
       new(configs)
