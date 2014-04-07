@@ -7,6 +7,26 @@ require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
 
 module RemoteFactoryGirl
+
+  #class ResponseDecorator
+
+  #  attr_reader :response
+
+  #  def initialize(factory)
+  #    @factory = factory
+  #  end
+
+  #  # TODO better name
+  #  def result
+  #    response
+  #  end
+
+  #  def resource(resource, json_to_active_resource = JsonToActiveResource)
+  #    json = factory.parser.json
+  #    json_to_active_resource.convert(json, {:with => attributes[:with]})
+  #  end
+  #end
+
   class RemoteFactoryGirl
 
     attr_reader :name, :attributes, :config
@@ -17,8 +37,8 @@ module RemoteFactoryGirl
       @config     = config 
     end
 
-    def parse(parser = ResponseParser)
-      parser.parse(post, config.to_hash)
+    def parse
+      parser.parse(post.json, config.to_hash)
     end
 
     def post(http = Http)
@@ -35,13 +55,14 @@ module RemoteFactoryGirl
     self.config = opts.fetch(:config).configure(config)
   end
 
-  def self.create(factory, attributes = {}, parser = ResponseParser, http = Http)
+  def self.create(factory, attributes = {}, parser = ResponseParser, http = Http, json_to_active_resource = JsonToActiveResource)
     factory  = RemoteFactoryGirl.new(factory, attributes.except(:with), config)
-    response = factory.post(http)
+    factory.post(http)
+
     if config.return_as_active_resource
-      JsonToActiveResource.convert(JSON.parse(response), {:with => attributes[:with]})
+      json_to_active_resource.new(factory.post.json)
     else
-      factory.parse(response)
+      factory.parse(parser)
     end
   end
 

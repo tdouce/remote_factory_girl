@@ -1,9 +1,9 @@
 module RemoteFactoryGirl
   class JsonToActiveResource
 
-    def self.convert(json, config)
-      new(JSON.parse(json), {:with => config[:with]}).convert
-    end
+    #def self.convert(json, resource = nil)
+    #  new(json, {:with => opts[:resource]})
+    #end
 
     attr_reader :config, :json
 
@@ -12,11 +12,11 @@ module RemoteFactoryGirl
       @config = config
     end
 
-    def convert
+    def resource(resource = nil) 
       raise 'ActiveResource not defined' if !defined?(ActiveResource)
 
-      if resource_provided? 
-        config[:with].find(id)
+      if resource
+        resource.find(id)
       else
         begin
           infer_resource.find(id)
@@ -26,14 +26,15 @@ module RemoteFactoryGirl
       end
     end
 
+    #TODO alias method?
+    def to_hash
+      json
+    end
+
     private
 
     def infer_resource
       to_array.first.first.titleize.constantize
-    end
-
-    def resource_provided?
-      config[:with]
     end
 
     def id

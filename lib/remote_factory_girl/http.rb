@@ -2,13 +2,26 @@ require 'rest-client'
 
 module RemoteFactoryGirl
   class Http
-    def self.post(config, params, rest_client = RestClient)
-      new.post(config, params, rest_client)
+    def self.post(config, params, http_lib = RestClient)
+      new(config, params, http_lib).post
     end
 
-    def post(config, params, rest_client)
+    attr_reader :config, :params, :http_lib, :response
+
+    def initialize(config, params, http_lib = RestClient)
+      @config   = config
+      @params   = params
+      @http_lib = http_lib
+    end
+
+    def post
       config.raise_no_host_error
-      rest_client.post config.home_url, params, content_type: :json, accept: :json
+      @response ||= http_lib.post config.home_url, params, content_type: :json, accept: :json
+      self
+    end
+
+    def json 
+      @json ||= JSON.parse(response)
     end
   end
 end

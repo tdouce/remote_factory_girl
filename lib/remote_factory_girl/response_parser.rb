@@ -20,18 +20,18 @@ module  RemoteFactoryGirl
       apply_config_options
     end
 
+    def json
+      @json ||= JSON.parse(json)
+    end
+
     private
 
     def hash_to_dot_klass
       {:hash_to_dot_klass => HashToDot}
     end
 
-    def parse_json
-      JSON.parse(json)
-    end
-
     def apply_config_options
-      configured_json = return_with_root(parse_json)   
+      configured_json = return_with_root(json)   
       configured_json = return_response_as(configured_json)
       configured_json
     end
