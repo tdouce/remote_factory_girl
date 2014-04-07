@@ -2,8 +2,10 @@ require 'remote_factory_girl'
 
 describe RemoteFactoryGirl do
 
+  let(:config) { double('config') }
+
   it 'should return params for http request' do
-    rfg = RemoteFactoryGirl::RemoteFactoryGirl.new('user', { :first_name => 'Sam' })
+    rfg = RemoteFactoryGirl::RemoteFactoryGirl.new('user', { :first_name => 'Sam' }, config)
     expect(rfg.params).to eq(
       { :factory => 'user', :attributes => { :first_name => 'Sam'}}
     )

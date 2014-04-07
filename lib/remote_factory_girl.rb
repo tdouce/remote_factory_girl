@@ -7,11 +7,21 @@ require 'remote_factory_girl/hash_to_dot'
 
 module RemoteFactoryGirl
   class RemoteFactoryGirl
-    attr_reader :name, :attributes
 
-    def initialize(name, attributes)
+    attr_reader :name, :attributes, :config
+
+    def initialize(name, attributes, config)
       @name       = name
       @attributes = attributes
+      @config     = config 
+    end
+
+    def parse(parser = ResponseParser)
+      parser.parse(post, config.to_hash)
+    end
+
+    def post(http = Http)
+      @post ||= http.post(config, params)
     end
 
     def params 
@@ -25,9 +35,9 @@ module RemoteFactoryGirl
   end
 
   def self.create(factory, attributes = {}, parser = ResponseParser, http = Http)
-    factory  = RemoteFactoryGirl.new(factory, attributes)
-    response = http.post(config, factory.params)
-    parser.parse(response, config.to_hash)
+    factory = RemoteFactoryGirl.new(factory, attributes, config)
+    factory.post(http)
+    factory.parse(parser)
   end
 
   def self.config
