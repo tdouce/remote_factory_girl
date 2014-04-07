@@ -2,6 +2,7 @@ require 'remote_factory_girl/hash_to_dot'
 require 'ostruct'
 require 'json'
 
+# TODO rename class to RepsonseConfigApplier
 module  RemoteFactoryGirl
   class ResponseParser 
 
@@ -18,10 +19,6 @@ module  RemoteFactoryGirl
 
     def parse
       apply_config_options
-    end
-
-    def json
-      @json ||= JSON.parse(json)
     end
 
     private
