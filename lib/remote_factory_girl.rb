@@ -7,20 +7,6 @@ require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
 
 module RemoteFactoryGirl
-
-  class JsonToActiveResourceDecorator
-
-    attr_reader :json_to_active_resource
-
-    def initialize(json_to_active_resource)
-      @json_to_active_resource = json_to_active_resource
-    end
-
-    def resource(resource = nil)
-      json
-    end
-  end
-
   class RemoteFactoryGirl
 
     attr_reader :name, :attributes, :config
