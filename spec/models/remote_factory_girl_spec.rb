@@ -20,14 +20,14 @@ describe RemoteFactoryGirl do
     end
   end
 
-  describe '#parse' do
-    it 'should parse json with supplied configuration' do
-      attributes = { :first_name => 'Sam' }
-      parser = double('RemoteFactoryGirl::ResponseParser')
-      post = double('RemoteFactoryGirl::Http', :json => {})
+  describe '#apply_config' do
+    it 'should apply config options to json with supplied configuration' do
+      attributes     = { :first_name => 'Sam' }
+      config_applier = double('RemoteFactoryGirl::ConfigApplier')
+      post           = double('RemoteFactoryGirl::Http', :json => {})
       RemoteFactoryGirl::Http.stub(:post).and_return(post)
-      expect(parser).to receive(:parse).with(post.json, config.to_hash)
-      RemoteFactoryGirl::RemoteFactoryGirl.new('user', attributes, config).parse(parser)
+      expect(config_applier).to receive(:apply_config).with(post.json, config.to_hash)
+      RemoteFactoryGirl::RemoteFactoryGirl.new('user', attributes, config).apply_config(config_applier)
     end
   end
 

@@ -1,7 +1,7 @@
 require 'virtus'
 require 'remote_factory_girl/config.rb'
 require 'remote_factory_girl/http.rb'
-require 'remote_factory_girl/response_parser'
+require 'remote_factory_girl/config_applier'
 require 'remote_factory_girl/config_struct'
 require 'remote_factory_girl/hash_to_dot'
 

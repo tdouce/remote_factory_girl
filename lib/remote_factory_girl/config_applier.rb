@@ -3,14 +3,13 @@ require 'remote_factory_girl/json_to_active_resource'
 require 'ostruct'
 require 'json'
 
-# TODO rename class to RepsonseConfigApplier
 module  RemoteFactoryGirl
-  class ResponseParser 
+  class ConfigApplier 
 
     attr_reader :json, :config
 
-    def self.parse(json, config = {})
-      new(json, config).parse
+    def self.apply_config(json, config = {})
+      new(json, config).apply_config
     end
 
     def initialize(json, config = {})
@@ -18,7 +17,7 @@ module  RemoteFactoryGirl
       @config = default_config.merge(config)
     end
 
-    def parse
+    def apply_config
       apply_config_options
     end
 

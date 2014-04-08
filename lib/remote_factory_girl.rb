@@ -1,7 +1,7 @@
 require "remote_factory_girl/version"
 require 'remote_factory_girl/config'
 require 'remote_factory_girl/http'
-require 'remote_factory_girl/response_parser'
+require 'remote_factory_girl/config_applier'
 require 'remote_factory_girl/config_struct'
 require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
@@ -17,8 +17,8 @@ module RemoteFactoryGirl
       @config     = config 
     end
 
-    def parse(parser = ResponseParser)
-      parser.parse(post.json, config.to_hash)
+    def apply_config(config_applier = ConfigApplier)
+      config_applier.apply_config(post.json, config.to_hash)
     end
 
     def post(http = Http)
@@ -35,10 +35,10 @@ module RemoteFactoryGirl
     self.config = opts.fetch(:config).configure(config)
   end
 
-  def self.create(factory, attributes = {}, parser = ResponseParser, http = Http)
+  def self.create(factory, attributes = {}, config_applier = ConfigApplier, http = Http)
     factory = RemoteFactoryGirl.new(factory, attributes, config)
     factory.post(http)
-    factory.parse(parser)
+    factory.apply_config(config_applier)
   end
 
   def self.config
