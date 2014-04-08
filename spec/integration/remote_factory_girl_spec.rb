@@ -60,7 +60,7 @@ describe RemoteFactoryGirl do
   describe 'creating a remote factory' do
 
     before do
-      RestClient.stub(:post).and_return('{ "user": {"first_name": "Sam", "last_name": "Iam"}}')
+      RestClient.stub(:post).and_return('{"user": {"id": "1", "first_name": "Sam", "last_name": "Iam"}}')
     end
 
     describe '.create' do
@@ -102,7 +102,25 @@ describe RemoteFactoryGirl do
         expect(user.first_name).to eq('Sam') 
       end
 
-      describe 'when returning response as active_resource' do
+      describe 'when configured to return active_resource object' do
+
+        class ActiveResource
+          def self.find(id); end;
+        end
+
+        class User < ActiveResource; end
+
+        before do 
+          RemoteFactoryGirl.configure do |config|
+            config.home = { :host => 'localhost' }
+            config.return_as_active_resource = true 
+          end
+        end
+
+        it 'should return an active resource object' do
+          expect(ActiveResource).to receive(:find).with(1)
+          RemoteFactoryGirl.create(:user).resource(User)
+        end
       end
     end
   end
