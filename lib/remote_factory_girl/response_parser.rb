@@ -1,4 +1,5 @@
 require 'remote_factory_girl/hash_to_dot'
+require 'remote_factory_girl/json_to_active_resource'
 require 'ostruct'
 require 'json'
 
@@ -14,22 +15,27 @@ module  RemoteFactoryGirl
 
     def initialize(json, config = {})
       @json   = json
-      @config = hash_to_dot_klass.merge(config)
+      @config = default_config.merge(config)
     end
 
     def parse
       apply_config_options
     end
 
-    private
-
-    def hash_to_dot_klass
-      {:hash_to_dot_klass => HashToDot}
+    def default_config
+      { :hash_to_dot_klass             => HashToDot, 
+        :json_to_active_resource_klass => JsonToActiveResource }
     end
 
+    private
+
     def apply_config_options
-      configured_json = return_with_root(json)   
-      configured_json = return_response_as(configured_json)
+      if config[:return_as_active_resource]
+        configured_json = config[:json_to_active_resource_klass].convert(json)
+      else
+        configured_json = return_with_root(json)   
+        configured_json = return_response_as(configured_json)
+      end
       configured_json
     end
 

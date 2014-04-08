@@ -1,4 +1,5 @@
 require 'remote_factory_girl/response_parser'
+require 'remote_factory_girl/json_to_active_resource'
 
 describe RemoteFactoryGirl::ResponseParser do
 
@@ -38,6 +39,15 @@ describe RemoteFactoryGirl::ResponseParser do
                                                                  :return_with_root   => false,
                                                                  :hash_to_dot_klass  => hash_to_dot_klass)
         expect(response.first_name).to eq('Sam') 
+      end
+    end
+
+    describe 'when configured to return active resource objects' do
+      it 'should return an active resource object' do
+        json_to_active_resource_klass = double('RemoteFactoryGirl::JsonToActiveResource')
+        expect(json_to_active_resource_klass).to receive(:convert).with(json)
+        RemoteFactoryGirl::ResponseParser.parse(json, :return_as_active_resource     => true, 
+                                                      :json_to_active_resource_klass => json_to_active_resource_klass)
       end
     end
   end

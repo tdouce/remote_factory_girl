@@ -35,10 +35,10 @@ module RemoteFactoryGirl
     self.config = opts.fetch(:config).configure(config)
   end
 
-  def self.create(factory, attributes = {}, parser = ResponseParser, http = Http, json_to_ar = JsonToActiveResource)
+  def self.create(factory, attributes = {}, parser = ResponseParser, http = Http)
     factory = RemoteFactoryGirl.new(factory, attributes, config)
     factory.post(http)
-    config.return_as_active_resource ? json_to_ar.convert(factory.post.json) : factory.parse(parser)
+    factory.parse(parser)
   end
 
   def self.config
