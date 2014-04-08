@@ -45,7 +45,7 @@ Or install it yourself as:
 
 ## Usage
 
-# Basic
+### Basic
 
 Configure in `spec/spec_helper.rb`
 ```ruby
@@ -70,7 +70,7 @@ describe User do
 end
 ```
 
-# ActiveResource 
+### ActiveResource 
 
 Configure in `spec/spec_helper.rb`
 ```ruby
