@@ -1,6 +1,6 @@
 # RemoteFactoryGirl
 
-[factory_girl](https://github.com/thoughtbot/factory_girl) for [Software Oriented Architecture](http://en.wikipedia.org/wiki/Service-oriented_architecture) (SOA). Create [factory_girl](https://github.com/thoughtbot/factory_girl) test data remotely using remote_factory_girl in conjuction with [remote_factory_girl_home_rails](https://github.com/tdouce/remote_factory_girl_home_rails).
+[factory_girl](https://github.com/thoughtbot/factory_girl) for [Software Oriented Architecture](http://en.wikipedia.org/wiki/Service-oriented_architecture) (SOA). Create [factory_girl](https://github.com/thoughtbot/factory_girl) test data remotely when used in conjunction with [remote_factory_girl_home_rails](https://github.com/tdouce/remote_factory_girl_home_rails).
 
 ## Getting Started
 
