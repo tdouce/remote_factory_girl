@@ -2,13 +2,33 @@ require 'remote_factory_girl'
 
 describe RemoteFactoryGirl do
 
-  let(:config) { double('config') }
+  let(:config) { double('config', :to_hash => {}) }
 
   it 'should return params for http request' do
     rfg = RemoteFactoryGirl::RemoteFactoryGirl.new('user', { :first_name => 'Sam' }, config)
     expect(rfg.params).to eq(
       { :factory => 'user', :attributes => { :first_name => 'Sam'}}
     )
+  end
+
+  describe '#post' do
+    it 'should send a post request' do
+      http       = double('RemoteFactoryGirl::Http')
+      attributes = { :first_name => 'Sam' }
+      expect(http).to receive(:post).with(config, {:factory => 'user', :attributes => { :first_name => 'Sam'}})
+      RemoteFactoryGirl::RemoteFactoryGirl.new('user', attributes, config).post(http)
+    end
+  end
+
+  describe '#apply_config' do
+    it 'should apply config options to json with supplied configuration' do
+      attributes     = { :first_name => 'Sam' }
+      config_applier = double('RemoteFactoryGirl::ConfigApplier')
+      post           = double('RemoteFactoryGirl::Http', :json => {})
+      RemoteFactoryGirl::Http.stub(:post).and_return(post)
+      expect(config_applier).to receive(:apply_config).with(post.json, config.to_hash)
+      RemoteFactoryGirl::RemoteFactoryGirl.new('user', attributes, config).apply_config(config_applier)
+    end
   end
 
   it 'should be able to configure with a block' do
@@ -33,14 +53,12 @@ describe RemoteFactoryGirl do
   end
 
   describe '.create' do
-    it 'should send http request and parse request' do
-      config = double('config', :home_url => 'http://somewhere', :to_hash => {})
-      http   = double('RemoteFactoryGirl::Http', :post => {})
-      parser = double('RemoteFactoryGirl::ResponseParser')
-      RemoteFactoryGirl.config = config
-      expect(http).to receive(:post).with(config, { :factory => 'user', :attributes => { :first_name => 'Sam'}})
-      expect(parser).to receive(:parse).with(http.post, config.to_hash)
-      RemoteFactoryGirl.create('user', { :first_name => 'Sam' }, parser, http)
+    describe 'when not returning active resource object' do
+      pending
+    end
+
+    describe 'when returning active resource object' do
+      pending
     end
   end
 end

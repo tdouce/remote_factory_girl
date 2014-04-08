@@ -45,8 +45,9 @@ Or install it yourself as:
 
 ## Usage
 
-Configure in `spec/spec_helper.rb`
+### Basic
 
+Configure in `spec/spec_helper.rb`
 ```ruby
 RemoteFactoryGirl.configure do |config|
   config.home = { host: 'localhost', port: 5000, end_point: "/over_the_rainbow" }
@@ -63,6 +64,29 @@ require 'spec_helper'
 describe User do
   it 'should create a user factory in RemoteFactoryGirlHome' do
     user = RemoteFactoryGirl.create(:user, first_name: 'Sam', last_name: 'Iam')
+    expect(user.first_name).to eq('Sam')
+  end
+end
+```
+
+### ActiveResource 
+
+Configure in `spec/spec_helper.rb`
+```ruby
+RemoteFactoryGirl.configure do |config|
+  config.home = { host: 'localhost', port: 5000, end_point: "/over_the_rainbow" }
+  config.return_as_active_resource = true 
+end
+```
+
+Use in specs
+
+```ruby
+require 'spec_helper'
+
+describe User do
+  it 'should create a user factory in RemoteFactoryGirlHome' do
+    user = RemoteFactoryGirl.create(:user_with_friends, first_name: 'Sam', last_name: 'Iam').resource(User)
     expect(user.first_name).to eq('Sam')
   end
 end
