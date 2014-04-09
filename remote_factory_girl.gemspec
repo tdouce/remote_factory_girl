@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = RemoteFactoryGirl::VERSION
   spec.authors       = ["tdouce"]
   spec.email         = ["travisdouce@gmail.com"]
-  spec.summary       = %q{ Create factories in server from client. }
-  spec.description   = %q{ Faciliates SOA (software oriented architecture) integration testing. Create objects from client in home. }
-  spec.homepage      = ""
+  spec.summary       = %q{}
+  spec.description   = %q{}
+  spec.homepage      = "https://github.com/tdouce/remote_factory_girl"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
