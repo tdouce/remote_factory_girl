@@ -20,7 +20,7 @@ module RemoteFactoryGirl
     end
 
     def get
-      @response_json = http_lib.get config.home_url, params, content_type: :json, accept: :json
+      @response_json = http_lib.get config.home_url, params.merge!(content_type: :json, accept: :json)
       self
     end
 

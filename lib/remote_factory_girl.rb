@@ -38,9 +38,9 @@ module RemoteFactoryGirl
     factory.factories(params, http).to_hash
   end
 
-  def self.create(factory, attributes = {}, config_applier = ConfigApplier, http = Http)
+  def self.create(factory_name, attributes = {}, config_applier = ConfigApplier, http = Http)
     factory = RemoteFactoryGirl.new(config)
-    factory.create(factory, attributes, http)
+    factory.create(factory_name, attributes, http)
     factory.apply_config(config_applier)
   end
 
