@@ -14,7 +14,7 @@ module RemoteFactoryGirl
     def initialize(name, attributes, config)
       @name       = name
       @attributes = attributes
-      @config     = config 
+      @config     = config
     end
 
     def apply_config(config_applier = ConfigApplier)
@@ -25,7 +25,7 @@ module RemoteFactoryGirl
       @post ||= http.post(config, params)
     end
 
-    def params 
+    def params
       { factory: name, attributes: attributes }
     end
   end

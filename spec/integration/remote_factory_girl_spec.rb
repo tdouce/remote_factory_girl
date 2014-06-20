@@ -6,11 +6,11 @@ describe RemoteFactoryGirl do
 
   describe 'configuration' do
     it 'should be configured with correct defaults' do
-      expect(RemoteFactoryGirl.config.home).to eq({ :host      => nil, 
-                                                    :port      => nil, 
+      expect(RemoteFactoryGirl.config.home).to eq({ :host      => nil,
+                                                    :port      => nil,
                                                     :end_point => '/remote_factory_girl/home'})
-      expect(RemoteFactoryGirl.config.return_response_as).to eq(:as_hash) 
-      expect(RemoteFactoryGirl.config.return_with_root).to be_true 
+      expect(RemoteFactoryGirl.config.return_response_as).to eq(:as_hash)
+      expect(RemoteFactoryGirl.config.return_with_root).to be_true
       expect(RemoteFactoryGirl.config.return_as_active_resource).to be_false
     end
 
@@ -23,8 +23,8 @@ describe RemoteFactoryGirl do
 
     it 'should be able to configure .home' do
       RemoteFactoryGirl.config.home[:host] = 'fun_guy'
-      RemoteFactoryGirl.config.home[:port] = 3333 
-      RemoteFactoryGirl.config.home[:end_point] = '/down_home' 
+      RemoteFactoryGirl.config.home[:port] = 3333
+      RemoteFactoryGirl.config.home[:end_point] = '/down_home'
       expect(RemoteFactoryGirl.config.home[:host]).to eq('fun_guy')
       expect(RemoteFactoryGirl.config.home[:port]).to eq(3333)
       expect(RemoteFactoryGirl.config.home[:end_point]).to eq('/down_home')
@@ -36,11 +36,11 @@ describe RemoteFactoryGirl do
 
     it 'should be able to configure .return_with_root' do
       RemoteFactoryGirl.config.return_with_root = false
-      expect(RemoteFactoryGirl.config.return_with_root).to be_false 
+      expect(RemoteFactoryGirl.config.return_with_root).to be_false
     end
 
     it 'should be able to configure .return_as_active_resource' do
-      RemoteFactoryGirl.config.return_with_root = true 
+      RemoteFactoryGirl.config.return_with_root = true
       expect(RemoteFactoryGirl.config.return_with_root).to be_true
     end
   end
@@ -71,19 +71,19 @@ describe RemoteFactoryGirl do
 
         it 'should be able to create a factory' do
           user = RemoteFactoryGirl.create(:site)
-          expect(user).to have_key('user') 
+          expect(user).to have_key('user')
         end
 
         it 'should not return root hash key when .return_with_root is false' do
           RemoteFactoryGirl.config.return_with_root = false
           user = RemoteFactoryGirl.create(:user)
-          expect(user).to_not have_key('user') 
+          expect(user).to_not have_key('user')
         end
 
         it 'should not return an object that responds to dot notation' do
           RemoteFactoryGirl.config.return_response_as = :dot_notation
           user = RemoteFactoryGirl.create(:user)
-          expect(user.first_name).to_not eq('Sam') 
+          expect(user.first_name).to_not eq('Sam')
         end
 
         it 'should send a post request to home' do
@@ -99,7 +99,7 @@ describe RemoteFactoryGirl do
           config.return_with_root   = false
         end
         user = RemoteFactoryGirl.create(:user)
-        expect(user.first_name).to eq('Sam') 
+        expect(user.first_name).to eq('Sam')
       end
 
       describe 'when configured to return active_resource object' do
@@ -110,10 +110,10 @@ describe RemoteFactoryGirl do
 
         class User < ActiveResource; end
 
-        before do 
+        before do
           RemoteFactoryGirl.configure do |config|
             config.home = { :host => 'localhost' }
-            config.return_as_active_resource = true 
+            config.return_as_active_resource = true
           end
         end
 
