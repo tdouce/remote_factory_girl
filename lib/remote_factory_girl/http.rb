@@ -13,6 +13,7 @@ module RemoteFactoryGirl
     attr_reader :config, :params, :http_lib, :response_json
 
     def initialize(config, params, http_lib = RestClient)
+      config.raise_no_host_error
       @config   = config
       @params   = params
       @http_lib = http_lib
@@ -24,7 +25,6 @@ module RemoteFactoryGirl
     end
 
     def post
-      config.raise_no_host_error
       @response_json = http_lib.post config.home_url, params, content_type: :json, accept: :json
       self
     end
