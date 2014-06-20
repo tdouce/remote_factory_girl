@@ -1,26 +1,18 @@
 require 'remote_factory_girl/exceptions'
-require 'virtus'
 
 module RemoteFactoryGirl
   class Config
-    include Virtus.model
 
-    DEFAULT_HOME_CONFIG = { :host      => nil, 
-                            :port      => nil, 
-                            :end_point => '/remote_factory_girl/home' }
+    attr_accessor :home, :return_response_as, :return_with_root, :return_as_active_resource
 
-    attribute :home,                      Hash,    :default => DEFAULT_HOME_CONFIG
-    attribute :return_response_as,        Symbol,  :default => :as_hash 
-    attribute :return_with_root,          Boolean, :default => true 
-    attribute :return_as_active_resource, Boolean, :default => false 
-
-    def self.configure(configs)
-      new(configs)
+    def initialize
+      @return_response_as        = :as_hash
+      @return_as_active_resource = false
+      @home                      = default_home_config
     end
 
-    def initialize(attrs = {})
-      attrs[:home] = update_home_config(attrs)
-      super(attrs)
+    def home=(home_config)
+      @home = home.merge(home_config)
     end
 
     def home_url
@@ -35,7 +27,10 @@ module RemoteFactoryGirl
 
     def to_hash
       raise_no_host_error
-      super.merge(home_url: home_url)
+      { home:                      home,
+        return_response_as:        return_response_as,
+        return_with_root:          return_with_root,
+        return_as_active_resource: return_as_active_resource }
     end
 
     def raise_no_host_error
@@ -48,8 +43,10 @@ module RemoteFactoryGirl
 
     private
 
-    def update_home_config(attrs)
-      attrs[:home] = DEFAULT_HOME_CONFIG.merge(attrs.fetch(:home, {}))
+    def default_home_config
+      { :host      => nil,
+        :port      => nil,
+        :end_point => '/remote_factory_girl/home' }
     end
   end
 end

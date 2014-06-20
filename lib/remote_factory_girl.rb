@@ -2,7 +2,6 @@ require "remote_factory_girl/version"
 require 'remote_factory_girl/config'
 require 'remote_factory_girl/http'
 require 'remote_factory_girl/config_applier'
-require 'remote_factory_girl/config_struct'
 require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
 
@@ -24,9 +23,10 @@ module RemoteFactoryGirl
     end
   end
 
-  def self.configure(opts = { :config_struct => ConfigStruct, :config => Config }, &block)
-    config      = opts.fetch(:config_struct).block_to_hash(block)
-    self.config = opts.fetch(:config).configure(config)
+  def self.configure(config = Config, &block)
+    configuration = Config.new
+    yield(configuration)
+    self.config = configuration
   end
 
   def self.factories(params = {}, http = Http)

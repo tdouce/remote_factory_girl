@@ -2,25 +2,11 @@ require 'virtus'
 require 'remote_factory_girl/config.rb'
 require 'remote_factory_girl/http.rb'
 require 'remote_factory_girl/config_applier'
-require 'remote_factory_girl/config_struct'
 require 'remote_factory_girl/hash_to_dot'
 
 describe RemoteFactoryGirl::Config do
 
   describe 'initialize' do
-
-    describe '.configure' do
-      it 'should be able to set configurations' do
-        config  = RemoteFactoryGirl::Config.configure({ :home => { :host => 'tifton', :port => 9999, :end_point => '/somewhere' },
-                                                        :return_response_as => :as_dot_notation,
-                                                        :return_with_root => false })
-        expect(config.home).to eq({ :host      => 'tifton', 
-                                    :port      => 9999, 
-                                    :end_point => '/somewhere'})
-        expect(config.return_response_as).to eq(:as_dot_notation) 
-        expect(config.return_with_root).to be_false
-      end
-    end
 
     describe 'default configuration' do
       it 'should be configured with correct defaults' do
