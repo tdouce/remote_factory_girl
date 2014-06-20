@@ -2,8 +2,8 @@ require "remote_factory_girl/version"
 require 'remote_factory_girl/config'
 require 'remote_factory_girl/http'
 require 'remote_factory_girl/config_applier'
-require'remote_factory_girl/config_struct'
-require'remote_factory_girl/hash_to_dot'
+require 'remote_factory_girl/config_struct'
+require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
 
 module RemoteFactoryGirl
