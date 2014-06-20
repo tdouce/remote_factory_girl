@@ -61,6 +61,16 @@ describe RemoteFactoryGirl do
 
     before do
       RestClient.stub(:post).and_return('{"user": {"id": "1", "first_name": "Sam", "last_name": "Iam"}}')
+      RestClient.stub(:get).and_return('["user", "user_admin"]')
+    end
+
+    describe '.factories' do
+
+      before { RemoteFactoryGirl.config.home[:host] = 'localhost' }
+
+      it 'should return all factories available' do
+        expect(RemoteFactoryGirl.factories).to match_array(['user', 'user_admin'])
+      end
     end
 
     describe '.create' do

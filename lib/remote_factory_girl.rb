@@ -9,24 +9,22 @@ require 'remote_factory_girl/json_to_active_resource'
 module RemoteFactoryGirl
   class RemoteFactoryGirl
 
-    attr_reader :name, :attributes, :config
+    attr_reader :config, :response
 
-    def initialize(name, attributes, config)
-      @name       = name
-      @attributes = attributes
-      @config     = config
+    def initialize(config)
+      @config = config
     end
 
     def apply_config(config_applier = ConfigApplier)
-      config_applier.apply_config(post.json, config.to_hash)
+      config_applier.apply_config(response.to_hash, config.to_hash)
     end
 
-    def post(http = Http)
-      @post ||= http.post(config, params)
+    def create(factory, attributes = {}, http = Http)
+      @response ||= http.post(config, { factory: factory, attributes: attributes })
     end
 
-    def params
-      { factory: name, attributes: attributes }
+    def factories(attributes = {}, http = Http)
+      @response ||= http.get(config, attributes)
     end
   end
 
@@ -35,9 +33,14 @@ module RemoteFactoryGirl
     self.config = opts.fetch(:config).configure(config)
   end
 
-  def self.create(factory, attributes = {}, config_applier = ConfigApplier, http = Http)
-    factory = RemoteFactoryGirl.new(factory, attributes, config)
-    factory.post(http)
+  def self.factories(params = {}, http = Http)
+    factory = RemoteFactoryGirl.new(config)
+    factory.factories(params, http).to_hash
+  end
+
+  def self.create(factory_name, attributes = {}, config_applier = ConfigApplier, http = Http)
+    factory = RemoteFactoryGirl.new(config)
+    factory.create(factory_name, attributes, http)
     factory.apply_config(config_applier)
   end
 
