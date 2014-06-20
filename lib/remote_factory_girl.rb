@@ -15,10 +15,6 @@ module RemoteFactoryGirl
       @config = config
     end
 
-    def apply_config(config_applier = ConfigApplier)
-      config_applier.apply_config(response.to_hash, config.to_hash)
-    end
-
     def create(factory, attributes = {}, http = Http)
       @response ||= http.post(config, { factory: factory, attributes: attributes })
     end
@@ -41,7 +37,7 @@ module RemoteFactoryGirl
   def self.create(factory_name, attributes = {}, config_applier = ConfigApplier, http = Http)
     factory = RemoteFactoryGirl.new(config)
     factory.create(factory_name, attributes, http)
-    factory.apply_config(config_applier)
+    config_applier.apply_config(factory.response.to_hash, config.to_hash)
   end
 
   def self.config
