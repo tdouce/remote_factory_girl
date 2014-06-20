@@ -2,8 +2,8 @@ require "remote_factory_girl/version"
 require 'remote_factory_girl/config'
 require 'remote_factory_girl/http'
 require 'remote_factory_girl/config_applier'
-require 'remote_factory_girl/config_struct'
-require 'remote_factory_girl/hash_to_dot'
+require'remote_factory_girl/config_struct'
+require'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
 
 module RemoteFactoryGirl
@@ -14,7 +14,7 @@ module RemoteFactoryGirl
     def initialize(name, attributes, config)
       @name       = name
       @attributes = attributes
-      @config     = config 
+      @config     = config
     end
 
     def apply_config(config_applier = ConfigApplier)
@@ -25,7 +25,7 @@ module RemoteFactoryGirl
       @post ||= http.post(config, params)
     end
 
-    def params 
+    def params
       { factory: name, attributes: attributes }
     end
   end
