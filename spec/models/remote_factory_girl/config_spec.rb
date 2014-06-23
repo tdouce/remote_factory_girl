@@ -53,4 +53,20 @@ describe RemoteFactoryGirl::Config do
       expect(config.has_home?).to be_true
     end
   end
+
+  describe '#to_hash' do
+    it 'should return a properly formatted hash' do
+      config.home[:port]      = '3000'
+      config.home[:host]      = 'localhost'
+      config.home[:end_point] = '/some_where'
+
+      expect(config.to_hash).to eq( { :home => { :host      => 'localhost', 
+                                                 :port      => '3000', 
+                                                 :end_point => '/some_where' },
+                                      :home_url                  => 'http://localhost:3000/some_where',
+                                      :return_response_as        => :as_hash,
+                                      :return_with_root          => true,
+                                      :return_as_active_resource => false })
+    end
+  end
 end
