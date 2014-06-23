@@ -7,6 +7,7 @@ module RemoteFactoryGirl
 
     def initialize
       @return_response_as        = :as_hash
+      @return_with_root          = true
       @return_as_active_resource = false
       @home                      = default_home_config
     end
