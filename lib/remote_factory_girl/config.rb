@@ -3,13 +3,14 @@ require 'remote_factory_girl/exceptions'
 module RemoteFactoryGirl
   class Config
 
-    attr_accessor :home, :return_response_as, :return_with_root, :return_as_active_resource
+    attr_accessor :home, :return_response_as, :return_with_root, :return_as_active_resource, :https
 
     def initialize
       @return_response_as        = :as_hash
       @return_with_root          = true
       @return_as_active_resource = false
       @home                      = default_home_config
+      @https                     = false
     end
 
     def home=(home_config)
@@ -18,11 +19,10 @@ module RemoteFactoryGirl
 
     def home_url
       raise_if_host_not_set
-      http = 'http://'
       if home[:port]
-        "#{ http }#{ home.fetch(:host) }:#{ home.fetch(:port) }#{ home.fetch(:end_point) }"
+        "#{ hyper_text_transfer_protocal }://#{ home.fetch(:host) }:#{ home.fetch(:port) }#{ home.fetch(:end_point) }"
       else
-        "#{ http }#{ home.fetch(:host) }#{ home.fetch(:end_point) }"
+        "#{ hyper_text_transfer_protocal }://#{ home.fetch(:host) }#{ home.fetch(:end_point) }"
       end
     end
 
@@ -43,6 +43,10 @@ module RemoteFactoryGirl
     end
 
     private
+
+    def hyper_text_transfer_protocal 
+      https == true ? 'https' : 'http'
+    end
 
     def default_home_config
       { :host      => nil,

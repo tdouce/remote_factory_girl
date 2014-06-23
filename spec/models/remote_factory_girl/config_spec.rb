@@ -17,6 +17,7 @@ describe RemoteFactoryGirl::Config do
         expect(config.return_response_as).to eq(:as_hash) 
         expect(config.return_with_root).to be_true 
         expect(config.return_as_active_resource).to be_false
+        expect(config.https).to be_false
       end
     end
   end
@@ -33,6 +34,14 @@ describe RemoteFactoryGirl::Config do
       config.home[:host] = 'localhost_no_port'
       config.home[:port] = nil 
       expect(config.home_url).to eq('http://localhost_no_port/remote_factory_girl/home')
+    end
+
+    it 'should return a url that is configured with https' do
+      config.https       = true
+      config.home[:host] = 'localhost'
+      config.home[:port] = 5555
+
+      expect(config.home_url).to eq('https://localhost:5555/remote_factory_girl/home')
     end
   end
 
