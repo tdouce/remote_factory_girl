@@ -40,8 +40,8 @@ describe RemoteFactoryGirl do
     end
 
     it 'should be able to configure .return_as_active_resource' do
-      RemoteFactoryGirl.config.return_with_root = true
-      expect(RemoteFactoryGirl.config.return_with_root).to be_true
+      RemoteFactoryGirl.config.return_as_active_resource = true
+      expect(RemoteFactoryGirl.config.return_as_active_resource).to be_true
     end
   end
 
