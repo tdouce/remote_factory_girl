@@ -11,7 +11,6 @@ describe RemoteFactoryGirl::Config do
 
     describe 'default configuration' do
       it 'should be configured with correct defaults' do
-        config = RemoteFactoryGirl::Config.new
         expect(config.home).to eq({ :host      => nil, 
                                     :port      => nil, 
                                     :end_point => '/remote_factory_girl/home'})
