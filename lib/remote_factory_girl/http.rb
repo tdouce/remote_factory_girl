@@ -13,7 +13,7 @@ module RemoteFactoryGirl
     attr_reader :config, :params, :http_lib, :response_json
 
     def initialize(config, params, http_lib = RestClient)
-      config.raise_no_host_error
+      config.raise_if_host_not_set
       @config   = config
       @params   = params
       @http_lib = http_lib

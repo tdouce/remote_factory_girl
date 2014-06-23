@@ -17,7 +17,7 @@ module RemoteFactoryGirl
     end
 
     def home_url
-      raise_no_host_error
+      raise_if_host_not_set
       http = 'http://'
       if home[:port]
         "#{ http }#{ home.fetch(:host) }:#{ home.fetch(:port) }#{ home.fetch(:end_point) }"
@@ -27,15 +27,15 @@ module RemoteFactoryGirl
     end
 
     def to_hash
-      raise_no_host_error
+      raise_if_host_not_set
       { home:                      home,
         return_response_as:        return_response_as,
         return_with_root:          return_with_root,
         return_as_active_resource: return_as_active_resource }
     end
 
-    def raise_no_host_error
-      raise RemoteFactoryGirlConfigError.new("RemoteFactoryGirl.config.home[:host] and RemoteFactoryGirl.config.home[:end_point] can not be nil") unless has_home?
+    def raise_if_host_not_set
+      raise RemoteFactoryGirlConfigError.new('RemoteFactoryGirl.config.home[:host] and RemoteFactoryGirl.config.home[:end_point] can not be nil') unless has_home?
     end
 
     def has_home?

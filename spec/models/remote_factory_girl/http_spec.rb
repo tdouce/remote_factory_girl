@@ -10,12 +10,12 @@ describe RemoteFactoryGirl::Http do
 
     it 'should raise no host config errors' do
       rest_client.stub(:post).with(config.home_url, params, content_type: :json, accept: :json).and_return(true)
-      expect(config).to receive(:raise_no_host_error) 
+      expect(config).to receive(:raise_if_host_not_set) 
       RemoteFactoryGirl::Http.post(config, params, rest_client)
     end
 
     it 'should send http request to home_url with params' do
-      config.stub(:raise_no_host_error)
+      config.stub(:raise_if_host_not_set)
       expect(rest_client).to receive(:post).with(config.home_url, params, content_type: :json, accept: :json) 
       RemoteFactoryGirl::Http.post(config, params, rest_client)
     end
