@@ -15,6 +15,7 @@ describe RemoteFactoryGirl::Config do
                                     :end_point => '/remote_factory_girl/home'})
         expect(config.return_response_as).to eq(:as_hash) 
         expect(config.return_with_root).to be_true 
+        expect(config.return_as_active_resource).to be_false
       end
     end
   end
