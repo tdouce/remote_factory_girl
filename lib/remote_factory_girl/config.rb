@@ -27,7 +27,6 @@ module RemoteFactoryGirl
     end
 
     def to_hash
-      raise_if_host_not_set
       { home:                      home,
         home_url:                  home_url,
         return_response_as:        return_response_as,
