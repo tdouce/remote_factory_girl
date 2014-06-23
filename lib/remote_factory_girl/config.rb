@@ -35,7 +35,7 @@ module RemoteFactoryGirl
     end
 
     def raise_no_host_error
-      raise RemoteFactoryGirlConfigError.new("RemoteFactoryGirl.config.home[:host] can not be nil") unless has_home?
+      raise RemoteFactoryGirlConfigError.new("RemoteFactoryGirl.config.home[:host] and RemoteFactoryGirl.config.home[:end_point] can not be nil") unless has_home?
     end
 
     def has_home?
