@@ -1,5 +1,6 @@
 require 'remote_factory_girl/config_applier'
 require 'remote_factory_girl/json_to_active_resource'
+require 'ostruct'
 
 describe RemoteFactoryGirl::ConfigApplier do
 
