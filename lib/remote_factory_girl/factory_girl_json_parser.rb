@@ -1,4 +1,4 @@
-module  RemoteFactoryGirl
+module RemoteFactoryGirl
   class FactoryGirlJsonParser
 
     def self.without_root(response_hash)
