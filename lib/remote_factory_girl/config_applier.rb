@@ -2,6 +2,7 @@ require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
 require 'ostruct'
 require 'json'
+require 'remote_factory_girl/factory_girl_json_parser'
 
 module  RemoteFactoryGirl
   class ConfigApplier 
@@ -23,7 +24,8 @@ module  RemoteFactoryGirl
 
     def default_config
       { :hash_to_dot_klass             => HashToDot, 
-        :json_to_active_resource_klass => JsonToActiveResource }
+        :json_to_active_resource_klass => JsonToActiveResource,
+        :response_parser               => FactoryGirlJsonParser }
     end
 
     private
@@ -42,8 +44,8 @@ module  RemoteFactoryGirl
       config[:return_response_as] == :dot_notation ? config[:hash_to_dot_klass].convert(parsed_json) : parsed_json
     end
 
-    def return_with_root(parsed_json)
-      config[:return_with_root] == false ? Array(parsed_json).flatten.last : parsed_json
+    def return_with_root(response_hash)
+      config[:return_with_root] == false ? config[:response_parser].without_root(response_hash) : response_hash
     end
   end
 end
