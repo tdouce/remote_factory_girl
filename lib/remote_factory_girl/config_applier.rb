@@ -20,13 +20,13 @@ module  RemoteFactoryGirl
       apply_config_options
     end
 
+    private
+
     def default_config
       { :hash_to_dot_klass             => HashToDot, 
         :json_to_active_resource_klass => JsonToActiveResource,
         :response_parser               => FactoryGirlJsonParser }
     end
-
-    private
 
     def apply_config_options
       if config[:return_as_active_resource]
