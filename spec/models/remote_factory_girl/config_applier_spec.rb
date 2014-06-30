@@ -4,10 +4,6 @@ require 'remote_factory_girl/json_to_active_resource'
 describe RemoteFactoryGirl::ConfigApplier do
 
   describe '.post' do
-
-    let(:unparsed_json) {
-      '{ "user": {"first_name": "Sam", "last_name": "Iam"}}'
-      }
     let(:json) {  
       { :user => { :first_name => "Sam", :last_name => "Iam"}}
     }
