@@ -1,6 +1,5 @@
 require 'remote_factory_girl/hash_to_dot'
 require 'remote_factory_girl/json_to_active_resource'
-require 'json'
 require 'remote_factory_girl/factory_girl_json_parser'
 
 module  RemoteFactoryGirl
