@@ -19,3 +19,8 @@ See [GETTING_STARTED](https://github.com/tdouce/remote_factory_girl/wiki/Getting
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## TODOS
+
+1. Allow remote_factory_girl to configure multiple "homes" (external services) so that
+   remote_factory_girl can create test data in multiple "homes"s.
