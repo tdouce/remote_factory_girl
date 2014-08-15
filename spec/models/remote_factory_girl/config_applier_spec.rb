@@ -5,7 +5,7 @@ require 'ostruct'
 describe RemoteFactoryGirl::ConfigApplier do
 
   describe '.post' do
-    let(:json) {  
+    let(:json) {
       { :user => { :first_name => "Sam", :last_name => "Iam"}}
     }
     let(:hash_to_dot_klass)      { double('RemoteFactoryGirl::HashToDot') }
@@ -42,20 +42,20 @@ describe RemoteFactoryGirl::ConfigApplier do
       end
 
       it 'should return an object that responds to dot notation' do
-        hash_to_dot_klass.stub(:convert).and_return(dish_json_with_user)
+        allow(hash_to_dot_klass).to receive(:convert).and_return(dish_json_with_user)
         response = RemoteFactoryGirl::ConfigApplier.apply_config(json, :return_response_as  => :dot_notation,
                                                                        :hash_to_dot_klass   => hash_to_dot_klass)
-        expect(response.user.first_name).to eq('Sam') 
+        expect(response.user.first_name).to eq('Sam')
       end
 
       it 'should not return root hash key and should return an object that responds to dot notation' do
         factory_girl_json_parser = double('RemoteFactoryGirl::FactoryGirlJsonParser', without_root: { :first_name => 'Sam', :last_name => 'Iam'})
-        hash_to_dot_klass.stub(:convert).and_return(dot_notation_without_root)
-        response = RemoteFactoryGirl::ConfigApplier.apply_config(json, :return_response_as => :dot_notation, 
+        allow(hash_to_dot_klass).to receive(:convert).and_return(dot_notation_without_root)
+        response = RemoteFactoryGirl::ConfigApplier.apply_config(json, :return_response_as => :dot_notation,
                                                                        :return_with_root   => false,
                                                                        :hash_to_dot_klass  => hash_to_dot_klass,
                                                                        :factory_girl_json_parser => factory_girl_json_parser)
-        expect(response.first_name).to eq('Sam') 
+        expect(response.first_name).to eq('Sam')
       end
     end
 
@@ -63,7 +63,7 @@ describe RemoteFactoryGirl::ConfigApplier do
       it 'should return an active resource object' do
         json_to_active_resource_klass = double('RemoteFactoryGirl::JsonToActiveResource')
         expect(json_to_active_resource_klass).to receive(:convert).with(json)
-        RemoteFactoryGirl::ConfigApplier.apply_config(json, :return_as_active_resource     => true, 
+        RemoteFactoryGirl::ConfigApplier.apply_config(json, :return_as_active_resource     => true,
                                                             :json_to_active_resource_klass => json_to_active_resource_klass)
       end
     end

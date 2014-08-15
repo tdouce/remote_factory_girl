@@ -10,9 +10,9 @@ describe RemoteFactoryGirl do
                                                     :port      => nil,
                                                     :end_point => '/remote_factory_girl/home'})
       expect(RemoteFactoryGirl.config.return_response_as).to eq(:as_hash)
-      expect(RemoteFactoryGirl.config.return_with_root).to be_true
-      expect(RemoteFactoryGirl.config.return_as_active_resource).to be_false
-      expect(RemoteFactoryGirl.config.https).to be_false
+      expect(RemoteFactoryGirl.config.return_with_root).to eq true
+      expect(RemoteFactoryGirl.config.return_as_active_resource).to eq false
+      expect(RemoteFactoryGirl.config.https).to eq false
     end
 
     it 'should be able to configure with a block' do
@@ -37,17 +37,17 @@ describe RemoteFactoryGirl do
 
     it 'should be able to configure .return_with_root' do
       RemoteFactoryGirl.config.return_with_root = false
-      expect(RemoteFactoryGirl.config.return_with_root).to be_false
+      expect(RemoteFactoryGirl.config.return_with_root).to eq false
     end
 
     it 'should be able to configure .return_as_active_resource' do
       RemoteFactoryGirl.config.return_as_active_resource = true
-      expect(RemoteFactoryGirl.config.return_as_active_resource).to be_true
+      expect(RemoteFactoryGirl.config.return_as_active_resource).to eq true
     end
 
     it 'should be able to configure https' do
       RemoteFactoryGirl.config.https = true
-      expect(RemoteFactoryGirl.config.https).to be_true
+      expect(RemoteFactoryGirl.config.https).to eq true
     end
   end
 
@@ -66,8 +66,8 @@ describe RemoteFactoryGirl do
   describe 'creating a remote factory' do
 
     before do
-      RestClient.stub(:post).and_return('{"user": {"id": "1", "first_name": "Sam", "last_name": "Iam"}}')
-      RestClient.stub(:get).and_return('["user", "user_admin"]')
+      allow(RestClient).to receive(:post).and_return('{"user": {"id": "1", "first_name": "Sam", "last_name": "Iam"}}')
+      allow(RestClient).to receive(:get).and_return('["user", "user_admin"]')
     end
 
     describe '.factories' do

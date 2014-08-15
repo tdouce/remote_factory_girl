@@ -15,9 +15,9 @@ describe RemoteFactoryGirl::Config do
                                     :port      => nil, 
                                     :end_point => '/remote_factory_girl/home'})
         expect(config.return_response_as).to eq(:as_hash) 
-        expect(config.return_with_root).to be_true 
-        expect(config.return_as_active_resource).to be_false
-        expect(config.https).to be_false
+        expect(config.return_with_root).to eq true
+        expect(config.return_as_active_resource).to eq false
+        expect(config.https).to eq false
       end
     end
   end
@@ -49,17 +49,17 @@ describe RemoteFactoryGirl::Config do
     it 'should return false when host and end_point are not set' do
       config.home[:host]      = nil 
       config.home[:end_point] = nil 
-      expect(config.has_home?).to be_false
+      expect(config.has_home?).to eq false
     end
 
     it 'should return false when host is not set and end_point is set' do
-      expect(config.has_home?).to be_false
+      expect(config.has_home?).to eq false
     end
 
     it 'should return true when host and end_point is set' do
       config.home[:host]      = 'localhost'
       config.home[:end_point] = 'some_where'
-      expect(config.has_home?).to be_true
+      expect(config.has_home?).to eq true
     end
   end
 
