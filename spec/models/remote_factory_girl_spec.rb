@@ -13,7 +13,7 @@ describe RemoteFactoryGirl do
     end
   end
 
-  it 'should be able to configure with a block' do
+  xit 'should be able to configure with a block' do
     pending
   end
 
