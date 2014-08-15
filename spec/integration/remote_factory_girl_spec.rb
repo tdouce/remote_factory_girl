@@ -66,8 +66,8 @@ describe RemoteFactoryGirl do
   describe 'creating a remote factory' do
 
     before do
-      RestClient.stub(:post).and_return('{"user": {"id": "1", "first_name": "Sam", "last_name": "Iam"}}')
-      RestClient.stub(:get).and_return('["user", "user_admin"]')
+      allow(RestClient).to receive(:post).and_return('{"user": {"id": "1", "first_name": "Sam", "last_name": "Iam"}}')
+      allow(RestClient).to receive(:get).and_return('["user", "user_admin"]')
     end
 
     describe '.factories' do
