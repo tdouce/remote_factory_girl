@@ -4,8 +4,8 @@ describe RemoteFactoryGirl::Http do
 
   describe '.post' do
 
-    let(:config) { double(:home_url => 'http://somewhere') }
-    let(:params) { double(:first_name => 'Sam', :last_name => 'Iam') }
+    let(:config) { double(home_url: 'http://somewhere') }
+    let(:params) { double(first_name: 'Sam', last_name: 'Iam') }
     let(:rest_client) { double('RestClient') }
 
     it 'should raise no host config errors' do

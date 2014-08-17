@@ -12,7 +12,7 @@ describe RemoteFactoryGirl::JsonToActiveResource do
 
     it 'should return an active resource object' do
       expect(ActiveResource).to receive(:find).with(1)
-      RemoteFactoryGirl::JsonToActiveResource.new({:user => {:id => 1}}).resource(User)
+      RemoteFactoryGirl::JsonToActiveResource.new({user: {id: 1}}).resource(User)
     end
   end
 end
