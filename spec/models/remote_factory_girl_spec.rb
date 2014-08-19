@@ -2,13 +2,13 @@ require 'remote_factory_girl'
 
 describe RemoteFactoryGirl do
 
-  let(:config) { double('config', :to_hash => {}) }
+  let(:config) { double('config', to_hash: {}) }
 
   describe '#create' do
     it 'should send a post request' do
       http       = double('RemoteFactoryGirl::Http')
-      attributes = { :first_name => 'Sam' }
-      expect(http).to receive(:post).with(config, {:factory => 'user', :attributes => { :first_name => 'Sam'}})
+      attributes = { first_name: 'Sam' }
+      expect(http).to receive(:post).with(config, {factory: 'user', attributes: { first_name: 'Sam'}})
       RemoteFactoryGirl::RemoteFactoryGirl.new(config).create('user', attributes, http)
     end
   end

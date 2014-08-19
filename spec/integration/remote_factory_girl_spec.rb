@@ -6,9 +6,9 @@ describe RemoteFactoryGirl do
 
   describe 'configuration' do
     it 'should be configured with correct defaults' do
-      expect(RemoteFactoryGirl.config.home).to eq({ :host      => nil,
-                                                    :port      => nil,
-                                                    :end_point => '/remote_factory_girl/home'})
+      expect(RemoteFactoryGirl.config.home).to eq({ host:      nil,
+                                                    port:      nil,
+                                                    end_point: '/remote_factory_girl/home'})
       expect(RemoteFactoryGirl.config.return_response_as).to eq(:as_hash)
       expect(RemoteFactoryGirl.config.return_with_root).to eq true
       expect(RemoteFactoryGirl.config.return_as_active_resource).to eq false
@@ -104,13 +104,13 @@ describe RemoteFactoryGirl do
 
         it 'should send a post request to home' do
           expect(RestClient).to receive(:post)
-          RemoteFactoryGirl.create(:user, :first_name => 'Sam', :last_name => 'Iam')
+          RemoteFactoryGirl.create(:user, first_name: 'Sam', last_name: 'Iam')
         end
       end
 
       it 'should not return root hash key and should return an object that responds to dot notation' do
         RemoteFactoryGirl.configure do |config|
-          config.home               = { :host => 'localhost' }
+          config.home               = { host: 'localhost' }
           config.return_response_as = :dot_notation
           config.return_with_root   = false
         end
@@ -128,7 +128,7 @@ describe RemoteFactoryGirl do
 
         before do
           RemoteFactoryGirl.configure do |config|
-            config.home = { :host => 'localhost' }
+            config.home = { host: 'localhost' }
             config.return_as_active_resource = true
           end
         end

@@ -11,10 +11,10 @@ describe RemoteFactoryGirl::Config do
 
     describe 'default configuration' do
       it 'should be configured with correct defaults' do
-        expect(config.home).to eq({ :host      => nil, 
-                                    :port      => nil, 
-                                    :end_point => '/remote_factory_girl/home'})
-        expect(config.return_response_as).to eq(:as_hash) 
+        expect(config.home).to eq({ host:       nil,
+                                    port:       nil,
+                                    end_point:  '/remote_factory_girl/home'})
+        expect(config.return_response_as).to eq(:as_hash)
         expect(config.return_with_root).to eq true
         expect(config.return_as_active_resource).to eq false
         expect(config.https).to eq false
@@ -47,8 +47,8 @@ describe RemoteFactoryGirl::Config do
 
   describe '#has_home?' do
     it 'should return false when host and end_point are not set' do
-      config.home[:host]      = nil 
-      config.home[:end_point] = nil 
+      config.home[:host]      = nil
+      config.home[:end_point] = nil
       expect(config.has_home?).to eq false
     end
 
@@ -69,13 +69,13 @@ describe RemoteFactoryGirl::Config do
       config.home[:host]      = 'localhost'
       config.home[:end_point] = '/some_where'
 
-      expect(config.to_hash).to eq( { :home => { :host      => 'localhost', 
-                                                 :port      => '3000', 
-                                                 :end_point => '/some_where' },
-                                      :home_url                  => 'http://localhost:3000/some_where',
-                                      :return_response_as        => :as_hash,
-                                      :return_with_root          => true,
-                                      :return_as_active_resource => false })
+      expect(config.to_hash).to eq( { home: { host:      'localhost',
+                                              port:      '3000',
+                                              end_point: '/some_where' },
+                                      home_url:                  'http://localhost:3000/some_where',
+                                      return_response_as:        :as_hash,
+                                      return_with_root:          true,
+                                      return_as_active_resource: false })
     end
   end
 end

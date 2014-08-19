@@ -44,14 +44,14 @@ module RemoteFactoryGirl
 
     private
 
-    def hyper_text_transfer_protocal 
+    def hyper_text_transfer_protocal
       https == true ? 'https' : 'http'
     end
 
     def default_home_config
-      { :host      => nil,
-        :port      => nil,
-        :end_point => '/remote_factory_girl/home' }
+      { host:      nil,
+        port:      nil,
+        end_point: '/remote_factory_girl/home' }
     end
   end
 end
