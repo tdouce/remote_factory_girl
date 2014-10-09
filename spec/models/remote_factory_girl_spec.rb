@@ -1,15 +1,68 @@
 require 'remote_factory_girl'
 
 describe RemoteFactoryGirl do
-
-  let(:config) { double('config', :to_hash => {}) }
-
   describe '#create' do
-    it 'should send a post request' do
-      http       = double('RemoteFactoryGirl::Http')
-      attributes = { :first_name => 'Sam' }
-      expect(http).to receive(:post).with(config, {:factory => 'user', :attributes => { :first_name => 'Sam'}})
-      RemoteFactoryGirl::RemoteFactoryGirl.new(config).create('user', attributes, http)
+
+    let(:http) { double('RemoteFactoryGirl::Http') }
+    let(:factory_attributes) { { :first_name => 'Sam' } }
+
+    context 'when remote configuration does not specify a remote name' do
+
+      before do
+        RemoteFactoryGirl.configure do |config|
+          config.home = {:host      => 'localhost',
+                         :port      => 3000,
+                         :end_point => '/remote_factory_girl/home' }
+        end
+      end
+
+      it "should send a post request to remote" do
+        config     = RemoteFactoryGirl.config
+        expect(http).to receive(:post).with(config, {:factory => :user, :attributes => factory_attributes})
+        RemoteFactoryGirl::RemoteFactoryGirl.new(config).create(:user, factory_attributes, http)
+      end
+    end
+
+    context 'when multiple remotes are configured' do
+      before do
+        RemoteFactoryGirl.configure(:travis) do |config|
+          config.home = {:host      => 'localhost',
+                         :port      => 3000,
+                         :end_point => '/remote_factory_girl/travis/home' }
+        end
+
+        RemoteFactoryGirl.configure(:casey) do |config|
+          config.home = {:host      => 'over_the_rainbow',
+                         :port      => 6000,
+                         :end_point => '/remote_factory_girl/casey/home' }
+        end
+      end
+
+      it "should be configured to send HTTP requests to 'travis' remote" do
+        remote_config_travis = RemoteFactoryGirl.config(:travis)
+        remote_factory_girl  = RemoteFactoryGirl::RemoteFactoryGirl.new(remote_config_travis)
+
+        expect(remote_factory_girl).to receive(:create).with(:user, factory_attributes, http) do |_, _, _|
+          expect(
+            remote_factory_girl.config.home_url
+          ).to eq('http://localhost:3000/remote_factory_girl/travis/home')
+        end
+
+        remote_factory_girl.create(:user, factory_attributes, http)
+      end
+
+      it "should be configured to send HTTP requests to 'casey' remote" do
+        remote_config_casey = RemoteFactoryGirl.config(:casey)
+        remote_factory_girl = RemoteFactoryGirl::RemoteFactoryGirl.new(remote_config_casey)
+
+        expect(remote_factory_girl).to receive(:create).with(:user, factory_attributes, http) do |_, _, _|
+          expect(
+            remote_factory_girl.config.home_url
+          ).to eq('http://over_the_rainbow:6000/remote_factory_girl/casey/home')
+        end
+
+        remote_factory_girl.create(:user, factory_attributes, http)
+      end
     end
   end
 

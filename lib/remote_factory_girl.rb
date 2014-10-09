@@ -36,9 +36,10 @@ module RemoteFactoryGirl
   end
 
   def self.create(factory_name, attributes = {}, config_applier = ConfigApplier, http = Http)
-    factory = RemoteFactoryGirl.new(config)
+    config_for_remote = config(remotes_config.current_remote)
+    factory = RemoteFactoryGirl.new(config_for_remote)
     factory.create(factory_name, attributes, http)
-    config_applier.apply_config(factory.response.to_hash, config.to_hash)
+    config_applier.apply_config(factory.response.to_hash, config_for_remote.to_hash)
   end
 
   def self.with_remote(remote_name = remotes_config.default_remote_name)
