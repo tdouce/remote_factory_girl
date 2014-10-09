@@ -1,5 +1,6 @@
 require "remote_factory_girl/version"
 require 'remote_factory_girl/config'
+require 'remote_factory_girl/remotes_config'
 require 'remote_factory_girl/http'
 require 'remote_factory_girl/config_applier'
 require 'remote_factory_girl/hash_to_dot'
@@ -23,10 +24,10 @@ module RemoteFactoryGirl
     end
   end
 
-  def self.configure(config = Config, &block)
+  def self.configure(remote_name = remotes_config.default_remote_name, config = Config, &block)
     configuration = Config.new
     yield(configuration)
-    self.config = configuration
+    remotes_config.add_remote(configuration, remote_name)
   end
 
   def self.factories(params = {}, http = Http)
@@ -40,15 +41,22 @@ module RemoteFactoryGirl
     config_applier.apply_config(factory.response.to_hash, config.to_hash)
   end
 
-  def self.config
-    @config
+  def self.with_remote(remote_name = remotes_config.default_remote_name)
+    remotes_config.current_remote = remote_name
+    self
   end
 
-  def self.config=(config)
-    @config = config
+  def self.config=(config, remote_name = remotes_config.default_remote_name)
+    remotes_config.add_remote(config, remote_name)
   end
 
   def self.reset(config = Config.new)
     self.config = config
+  def self.config(remote_name = remotes_config.default_remote_name)
+    remotes_config.config_for(remote_name)
+  end
+
+  def self.remotes_config
+    @remotes_config ||= RemotesConfig.new
   end
 end

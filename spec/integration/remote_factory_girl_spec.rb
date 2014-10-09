@@ -49,6 +49,41 @@ describe RemoteFactoryGirl do
       RemoteFactoryGirl.config.https = true
       expect(RemoteFactoryGirl.config.https).to eq true
     end
+
+    context 'when configuring multiple remotes' do
+
+      before do
+        RemoteFactoryGirl.configure(:travis) do |config|
+          config.home               = {:host => 'localhost',
+                                       :port => 3000,
+                                       :end_point => '/remote_factory_girl/travis/home' }
+          config.return_response_as = :as_hash
+          config.return_with_root   = true
+        end
+
+        RemoteFactoryGirl.configure(:casey) do |config|
+          config.home               = {:host => 'over_the_rainbow',
+                                       :port => 6000,
+                                       :end_point => '/remote_factory_girl/casey/home' }
+          config.return_response_as = :dot_notation
+          config.return_with_root   = false
+        end
+      end
+
+      it 'should return configuration for remote "travis"' do
+        expect(RemoteFactoryGirl.config(:travis).home).to eq({:host      => 'localhost',
+                                                              :port      => 3000,
+                                                              :end_point => '/remote_factory_girl/travis/home'})
+        expect(RemoteFactoryGirl.config(:travis).return_with_root).to eq(true)
+        expect(RemoteFactoryGirl.config(:travis).return_response_as).to eq(:as_hash)
+      end
+
+      it 'should return configuration for remote "casey"' do
+        expect(RemoteFactoryGirl.config(:casey).home).to eq({:host      => 'over_the_rainbow',
+                                                             :port      => 6000,
+                                                             :end_point => '/remote_factory_girl/casey/home'})
+      end
+    end
   end
 
   describe 'errors' do
