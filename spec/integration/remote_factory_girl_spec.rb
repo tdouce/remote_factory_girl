@@ -1,4 +1,5 @@
 require 'remote_factory_girl'
+require 'spec_helper'
 
 describe RemoteFactoryGirl do
 
@@ -53,21 +54,14 @@ describe RemoteFactoryGirl do
     context 'when configuring multiple remotes' do
 
       before do
-        RemoteFactoryGirl.configure(:travis) do |config|
-          config.home               = {:host => 'localhost',
-                                       :port => 3000,
-                                       :end_point => '/remote_factory_girl/travis/home' }
-          config.return_response_as = :as_hash
-          config.return_with_root   = true
-        end
-
-        RemoteFactoryGirl.configure(:casey) do |config|
-          config.home               = {:host => 'over_the_rainbow',
-                                       :port => 6000,
-                                       :end_point => '/remote_factory_girl/casey/home' }
-          config.return_response_as = :dot_notation
-          config.return_with_root   = false
-        end
+        configure_remote_factory_girl(remote_name: :travis,
+                                      host: 'localhost',
+                                      port: 3000,
+                                      end_point: '/remote_factory_girl/travis/home')
+        configure_remote_factory_girl(remote_name: :casey,
+                                      host: 'over_the_rainbow',
+                                      port: 6000,
+                                      end_point: '/remote_factory_girl/casey/home')
       end
 
       it 'should return configuration for remote "travis"' do
@@ -109,21 +103,14 @@ describe RemoteFactoryGirl do
       context 'when multiple remotes are configured' do
 
         before do
-          RemoteFactoryGirl.configure(:travis) do |config|
-            config.home               = {:host => 'localhost',
-                                         :port => 3000,
-                                         :end_point => '/remote_factory_girl/travis/home' }
-            config.return_response_as = :as_hash
-            config.return_with_root   = true
-          end
-
-          RemoteFactoryGirl.configure(:casey) do |config|
-            config.home               = {:host => 'over_the_rainbow',
-                                         :port => 6000,
-                                         :end_point => '/remote_factory_girl/casey/home' }
-            config.return_response_as = :dot_notation
-            config.return_with_root   = false
-          end
+          configure_remote_factory_girl(remote_name: :travis,
+                                        host: 'localhost',
+                                        port: 3000,
+                                        end_point: '/remote_factory_girl/travis/home')
+          configure_remote_factory_girl(remote_name: :casey,
+                                        host: 'over_the_rainbow',
+                                        port: 6000,
+                                        end_point: '/remote_factory_girl/casey/home')
         end
 
         context 'for remote "travis"' do
@@ -170,13 +157,8 @@ describe RemoteFactoryGirl do
       context 'when configured with remote "default"' do
 
         before do
-          RemoteFactoryGirl.configure do |config|
-            config.home               = {:host => 'not_configured_with_name',
-                                         :port => 9000,
-                                         :end_point => '/remote_factory_girl/home' }
-            config.return_response_as = :dot_notation
-            config.return_with_root   = false
-          end
+          configure_remote_factory_girl(host: 'not_configured_with_name',
+                                        port: 9000)
         end
 
         it 'should return all factories available' do
@@ -202,21 +184,18 @@ describe RemoteFactoryGirl do
     describe '.create' do
       context 'when configured with multiple remotes' do
         before do
-          RemoteFactoryGirl.configure(:travis) do |config|
-            config.home               = {:host      => 'localhost',
-                                         :port      => 3000,
-                                         :end_point => '/remote_factory_girl/travis/home' }
-            config.return_response_as = :as_hash
-            config.return_with_root   = false
-          end
+          configure_remote_factory_girl(remote_name: :travis,
+                                        host: 'localhost',
+                                        port: 3000,
+                                        end_point: '/remote_factory_girl/travis/home',
+                                        return_with_root: false)
+          configure_remote_factory_girl(remote_name: :casey,
+                                        host: 'over_the_rainbow',
+                                        port: 6000,
+                                        end_point: '/remote_factory_girl/casey/home',
+                                        return_response_as: :dot_notation,
+                                        return_with_root: false)
 
-          RemoteFactoryGirl.configure(:casey) do |config|
-            config.home               = {:host      => 'over_the_rainbow',
-                                         :port      => 6000,
-                                         :end_point => '/remote_factory_girl/casey/home' }
-            config.return_response_as = :dot_notation
-            config.return_with_root   = false
-          end
         end
 
         it 'should be able to create a factory with "travis" remote' do
@@ -258,11 +237,10 @@ describe RemoteFactoryGirl do
       end
 
       it 'should not return root hash key and should return an object that responds to dot notation' do
-        RemoteFactoryGirl.configure do |config|
-          config.home               = { :host => 'localhost' }
-          config.return_response_as = :dot_notation
-          config.return_with_root   = false
-        end
+        configure_remote_factory_girl(host: 'localhost',
+                                      port: 3000,
+                                      return_response_as: :dot_notation,
+                                      return_with_root: false)
         user = RemoteFactoryGirl.create(:user)
         expect(user.first_name).to eq('Sam')
       end

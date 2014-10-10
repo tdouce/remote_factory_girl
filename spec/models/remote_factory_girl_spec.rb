@@ -1,4 +1,5 @@
 require 'remote_factory_girl'
+require 'spec_helper'
 
 describe RemoteFactoryGirl do
   describe '#create' do
@@ -9,11 +10,8 @@ describe RemoteFactoryGirl do
     context 'when remote configuration does not specify a remote name' do
 
       before do
-        RemoteFactoryGirl.configure do |config|
-          config.home = {:host      => 'localhost',
-                         :port      => 3000,
-                         :end_point => '/remote_factory_girl/home' }
-        end
+        configure_remote_factory_girl(host: 'localhost', 
+                                      port: 3000)
       end
 
       it "should send a post request to remote" do
@@ -25,17 +23,14 @@ describe RemoteFactoryGirl do
 
     context 'when multiple remotes are configured' do
       before do
-        RemoteFactoryGirl.configure(:travis) do |config|
-          config.home = {:host      => 'localhost',
-                         :port      => 3000,
-                         :end_point => '/remote_factory_girl/travis/home' }
-        end
-
-        RemoteFactoryGirl.configure(:casey) do |config|
-          config.home = {:host      => 'over_the_rainbow',
-                         :port      => 6000,
-                         :end_point => '/remote_factory_girl/casey/home' }
-        end
+        configure_remote_factory_girl(remote_name: :travis,
+                                      host: 'localhost',
+                                      port: 3000,
+                                      end_point: '/remote_factory_girl/travis/home')
+        configure_remote_factory_girl(remote_name: :casey,
+                                      host: 'over_the_rainbow',
+                                      port: 6000,
+                                      end_point: '/remote_factory_girl/casey/home')
       end
 
       it "should be configured to send HTTP requests to 'travis' remote" do
@@ -82,17 +77,15 @@ describe RemoteFactoryGirl do
     context 'when multiple remotes are configured' do
 
       before do
-        RemoteFactoryGirl.configure(:travis) do |config|
-          config.home = {:host      => 'localhost',
-                         :port      => 3000,
-                         :end_point => '/remote_factory_girl/travis/home' }
-        end
+        configure_remote_factory_girl(remote_name: :travis,
+                                      host: 'localhost',
+                                      port: 3000,
+                                      end_point: '/remote_factory_girl/travis/home')
+        configure_remote_factory_girl(remote_name: :casey,
+                                      host: 'over_the_rainbow',
+                                      port: 6000,
+                                      end_point: '/remote_factory_girl/casey/home')
 
-        RemoteFactoryGirl.configure(:casey) do |config|
-          config.home = {:host      => 'over_the_rainbow',
-                         :port      => 6000,
-                         :end_point => '/remote_factory_girl/casey/home' }
-        end
       end
 
       it 'should be able to reset the configuration' do
@@ -103,13 +96,8 @@ describe RemoteFactoryGirl do
 
     context 'when only one remote configuration and does not specify a remote name' do
       before do
-        RemoteFactoryGirl.configure do |config|
-          config.home               = {:host => 'not_configured_with_name',
-                                       :port => 9000,
-                                       :end_point => '/remote_factory_girl/home' }
-          config.return_response_as = :dot_notation
-          config.return_with_root   = false
-        end
+        configure_remote_factory_girl(host: 'not_configured_with_name',
+                                      port: 9000)
       end
 
       it 'should be able to reset the configuration' do
@@ -125,17 +113,14 @@ describe RemoteFactoryGirl do
       let(:http) { double('RemoteFactoryGirl::Http') }
 
       before do
-        RemoteFactoryGirl.configure(:travis) do |config|
-          config.home = {:host      => 'localhost',
-                         :port      => 3000,
-                         :end_point => '/remote_factory_girl/travis/home' }
-        end
-
-        RemoteFactoryGirl.configure(:casey) do |config|
-          config.home = {:host      => 'over_the_rainbow',
-                         :port      => 6000,
-                         :end_point => '/remote_factory_girl/casey/home' }
-        end
+        configure_remote_factory_girl(remote_name: :travis,
+                                      host: 'localhost',
+                                      port: 3000,
+                                      end_point: '/remote_factory_girl/travis/home')
+        configure_remote_factory_girl(remote_name: :casey,
+                                      host: 'over_the_rainbow',
+                                      port: 6000,
+                                      end_point: '/remote_factory_girl/casey/home')
       end
 
       it "should be configured to send HTTP requests to 'travis' remote" do
