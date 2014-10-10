@@ -31,7 +31,8 @@ module RemoteFactoryGirl
   end
 
   def self.factories(params = {}, http = Http)
-    factory = RemoteFactoryGirl.new(config)
+    config_for_remote = config(remotes_config.current_remote)
+    factory = RemoteFactoryGirl.new(config_for_remote)
     factory.factories(params, http).to_hash
   end
 

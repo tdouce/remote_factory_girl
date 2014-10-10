@@ -118,6 +118,51 @@ describe RemoteFactoryGirl do
       end
     end
   end
+
+  describe '.factories' do
+    context 'when multiple remotes are configured' do
+
+      let(:http) { double('RemoteFactoryGirl::Http') }
+
+      before do
+        RemoteFactoryGirl.configure(:travis) do |config|
+          config.home = {:host      => 'localhost',
+                         :port      => 3000,
+                         :end_point => '/remote_factory_girl/travis/home' }
+        end
+
+        RemoteFactoryGirl.configure(:casey) do |config|
+          config.home = {:host      => 'over_the_rainbow',
+                         :port      => 6000,
+                         :end_point => '/remote_factory_girl/casey/home' }
+        end
+      end
+
+      it "should be configured to send HTTP requests to 'travis' remote" do
+        remote_config_travis = RemoteFactoryGirl.config(:travis)
+        remote_factory_girl  = RemoteFactoryGirl::RemoteFactoryGirl.new(remote_config_travis)
+
+        expect(remote_factory_girl).to receive(:factories).with({}, http) do |_, _|
+          expect(
+            remote_factory_girl.config.home_url
+          ).to eq('http://localhost:3000/remote_factory_girl/travis/home')
+        end
+
+        remote_factory_girl.factories({}, http)
+      end
+
+      it "should be configured to send HTTP requests to 'casey' remote" do
+        remote_config_casey = RemoteFactoryGirl.config(:casey)
+        remote_factory_girl = RemoteFactoryGirl::RemoteFactoryGirl.new(remote_config_casey)
+
+        expect(remote_factory_girl).to receive(:factories).with({}, http) do |_, _|
+          expect(
+            remote_factory_girl.config.home_url
+          ).to eq('http://over_the_rainbow:6000/remote_factory_girl/casey/home')
+        end
+
+        remote_factory_girl.factories({}, http)
+      end
     end
   end
 

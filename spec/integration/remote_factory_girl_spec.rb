@@ -106,11 +106,96 @@ describe RemoteFactoryGirl do
     end
 
     describe '.factories' do
+      context 'when multiple remotes are configured' do
 
-      before { RemoteFactoryGirl.config.home[:host] = 'localhost' }
+        before do
+          RemoteFactoryGirl.configure(:travis) do |config|
+            config.home               = {:host => 'localhost',
+                                         :port => 3000,
+                                         :end_point => '/remote_factory_girl/travis/home' }
+            config.return_response_as = :as_hash
+            config.return_with_root   = true
+          end
 
-      it 'should return all factories available' do
-        expect(RemoteFactoryGirl.factories).to match_array(['user', 'user_admin'])
+          RemoteFactoryGirl.configure(:casey) do |config|
+            config.home               = {:host => 'over_the_rainbow',
+                                         :port => 6000,
+                                         :end_point => '/remote_factory_girl/casey/home' }
+            config.return_response_as = :dot_notation
+            config.return_with_root   = false
+          end
+        end
+
+        context 'for remote "travis"' do
+          it 'should return all factories available' do
+            expect(RemoteFactoryGirl.with_remote(:travis).factories).to match_array(['user', 'user_admin'])
+          end
+
+          it 'should be configured to send HTTP request to remote "travis"' do
+            remote_factory_girl = RemoteFactoryGirl.with_remote(:travis)
+
+            expect(remote_factory_girl).to receive(:factories) do
+              expect(
+                remote_factory_girl.remotes_config.current_remote
+              ).to eq(:travis)
+              expect(
+                remote_factory_girl.config(:travis).home_url
+              ).to eq('http://localhost:3000/remote_factory_girl/travis/home')
+            end
+            remote_factory_girl.factories
+          end
+        end
+
+        context 'for remote "casey"' do
+          it 'should return all factories available' do
+            expect(RemoteFactoryGirl.with_remote(:casey).factories).to match_array(['user', 'user_admin'])
+          end
+
+          it 'should be configured to send HTTP request to remote "casey"' do
+            remote_factory_girl = RemoteFactoryGirl.with_remote(:casey)
+
+            expect(remote_factory_girl).to receive(:factories) do
+              expect(
+                remote_factory_girl.remotes_config.current_remote
+              ).to eq(:casey)
+              expect(
+                remote_factory_girl.config(:casey).home_url
+              ).to eq('http://over_the_rainbow:6000/remote_factory_girl/casey/home')
+            end
+            remote_factory_girl.factories
+          end
+        end
+      end
+
+      context 'when configured with remote "default"' do
+
+        before do
+          RemoteFactoryGirl.configure do |config|
+            config.home               = {:host => 'not_configured_with_name',
+                                         :port => 9000,
+                                         :end_point => '/remote_factory_girl/home' }
+            config.return_response_as = :dot_notation
+            config.return_with_root   = false
+          end
+        end
+
+        it 'should return all factories available' do
+          expect(RemoteFactoryGirl.factories).to match_array(['user', 'user_admin'])
+        end
+
+        it 'should be configured to send HTTP request to remote "default"' do
+          remote_factory_girl = RemoteFactoryGirl
+
+          expect(remote_factory_girl).to receive(:factories) do
+            expect(
+              remote_factory_girl.remotes_config.current_remote
+            ).to eq(:default)
+            expect(
+              remote_factory_girl.config.home_url
+            ).to eq('http://not_configured_with_name:9000/remote_factory_girl/home')
+          end
+          remote_factory_girl.factories
+        end
       end
     end
 
