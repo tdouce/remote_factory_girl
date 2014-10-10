@@ -51,8 +51,6 @@ module RemoteFactoryGirl
     remotes_config.add_remote(config, remote_name)
   end
 
-  def self.reset(config = Config.new)
-    self.config = config
   def self.config(remote_name = remotes_config.default_remote_name)
     remotes_config.config_for(remote_name)
   end

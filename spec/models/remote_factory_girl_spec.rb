@@ -79,11 +79,45 @@ describe RemoteFactoryGirl do
   end
 
   describe '.reset' do
-    it 'should be able to reset the configuration' do
-      config = double('config')
-      RemoteFactoryGirl.config = config
-      RemoteFactoryGirl.reset(double('config'))
-      expect(RemoteFactoryGirl.config).to_not equal(config)
+    context 'when multiple remotes are configured' do
+
+      before do
+        RemoteFactoryGirl.configure(:travis) do |config|
+          config.home = {:host      => 'localhost',
+                         :port      => 3000,
+                         :end_point => '/remote_factory_girl/travis/home' }
+        end
+
+        RemoteFactoryGirl.configure(:casey) do |config|
+          config.home = {:host      => 'over_the_rainbow',
+                         :port      => 6000,
+                         :end_point => '/remote_factory_girl/casey/home' }
+        end
+      end
+
+      it 'should be able to reset the configuration' do
+        RemoteFactoryGirl.remotes_config.reset
+        expect(RemoteFactoryGirl.remotes_config.to_hash.keys).to eq([:default])
+      end
+    end
+
+    context 'when only one remote configuration and does not specify a remote name' do
+      before do
+        RemoteFactoryGirl.configure do |config|
+          config.home               = {:host => 'not_configured_with_name',
+                                       :port => 9000,
+                                       :end_point => '/remote_factory_girl/home' }
+          config.return_response_as = :dot_notation
+          config.return_with_root   = false
+        end
+      end
+
+      it 'should be able to reset the configuration' do
+        RemoteFactoryGirl.remotes_config.reset
+        expect(RemoteFactoryGirl.remotes_config.to_hash.keys).to eq([:default])
+      end
+    end
+  end
     end
   end
 

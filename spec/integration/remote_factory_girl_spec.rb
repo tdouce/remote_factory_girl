@@ -2,7 +2,7 @@ require 'remote_factory_girl'
 
 describe RemoteFactoryGirl do
 
-  before { RemoteFactoryGirl.reset }
+  before { RemoteFactoryGirl.remotes_config.reset }
 
   describe 'configuration' do
     it 'should be configured with correct defaults' do
