@@ -27,7 +27,7 @@ module RemoteFactoryGirl
   def self.configure(remote_name = remotes_config.default_remote_name, config = Config, &block)
     configuration = Config.new
     yield(configuration)
-    remotes_config.add_remote(configuration, remote_name)
+    remotes_config.remotes[remote_name] = configuration
   end
 
   def self.factories(params = {}, http = Http)
@@ -49,11 +49,11 @@ module RemoteFactoryGirl
   end
 
   def self.config=(config, remote_name = remotes_config.default_remote_name)
-    remotes_config.add_remote(config, remote_name)
+    remotes_config.remotes[remote_name] = config
   end
 
   def self.config(remote_name = remotes_config.default_remote_name)
-    remotes_config.config_for(remote_name)
+    remotes_config.remotes[remote_name]
   end
 
   def self.remotes_config

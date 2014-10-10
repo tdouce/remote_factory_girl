@@ -4,6 +4,11 @@ module RemoteFactoryGirl
   class RemotesConfig
 
     attr_writer :current_remote
+    attr_accessor :remotes
+
+    DEFAULT_REMOTE_NAME = :default
+
+    alias_method :to_hash, :remotes
 
     def initialize
       @remotes = {}
@@ -13,36 +18,13 @@ module RemoteFactoryGirl
       @current_remote || default_remote_name
     end
 
-    def to_hash
-      remotes
-    end
-
-    def add_remote(config, remote_name)
-      @remotes[remote_name] = config
-    end
-
-    def config_for(remote_name)
-      remotes.fetch(remote_name)
-    end
-
     def default_remote_name
-      :default
+      DEFAULT_REMOTE_NAME
     end
 
     def reset(config = Config.new)
       self.current_remote = default_remote_name
-      self.remotes        = {}
-      add_remote(config, default_remote_name)
-    end
-
-    private
-
-    def remotes=(obj)
-      @remotes = obj
-    end
-
-    def remotes
-      @remotes
+      self.remotes        = { default_remote_name => config}
     end
   end
 end
