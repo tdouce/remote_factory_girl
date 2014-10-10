@@ -62,15 +62,8 @@ describe RemoteFactoryGirl do
   end
 
   xit 'should be able to configure with a block' do
+    # TODO: Remove
     pending
-  end
-
-  describe '.config' do
-    it 'should be able to set and get config' do
-      config = double('config')
-      RemoteFactoryGirl.config = config
-      expect(RemoteFactoryGirl.config).to equal(config)
-    end
   end
 
   describe '.reset' do

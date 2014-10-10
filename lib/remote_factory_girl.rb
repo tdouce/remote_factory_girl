@@ -48,10 +48,6 @@ module RemoteFactoryGirl
     self
   end
 
-  def self.config=(config, remote_name = remotes_config.default_remote_name)
-    remotes_config.remotes[remote_name] = config
-  end
-
   def self.config(remote_name = remotes_config.default_remote_name)
     remotes_config.remotes[remote_name]
   end
