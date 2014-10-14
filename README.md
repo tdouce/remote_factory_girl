@@ -21,6 +21,3 @@ See [GETTING_STARTED](https://github.com/tdouce/remote_factory_girl/wiki/Getting
 5. Create new Pull Request
 
 ## TODOS
-
-1. Allow remote_factory_girl to configure multiple "homes" (external services) so that
-   remote_factory_girl can create test data in multiple "homes"s.
