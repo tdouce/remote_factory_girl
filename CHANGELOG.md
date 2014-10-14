@@ -1,4 +1,4 @@
-### 1.1.0
+### 1.1.0 - Oct. 13, 2014
 1. Configure and create test data in multiple "home"/"remote" applications
 2. Remove RemoteFactoryGirl.reset. Instead use, RemoteFactoryGirl.remotes_config.reset
 
