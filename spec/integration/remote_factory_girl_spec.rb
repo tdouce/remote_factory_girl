@@ -266,5 +266,20 @@ describe RemoteFactoryGirl do
         end
       end
     end
+
+    describe '.create_list' do
+      before do
+        configure_remote_factory_girl(host: 'localhost',
+                                      port: 3000)
+      end
+
+      context 'when configured with default home' do
+        it 'should send a post request to home 3 times' do
+          expect(RestClient).to receive(:post).exactly(3).times
+
+          RemoteFactoryGirl.create_list(:user, 3, :first_name => 'Sam', :last_name => 'Iam')
+        end
+      end
+    end
   end
 end
