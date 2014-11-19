@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["tdouce"]
   spec.email         = ["travisdouce@gmail.com"]
   spec.summary       = %q{}
-  spec.description   = %q{}
+  spec.description   = %q{Create test data when used in conjunction with remote_factory_girl_home_rails}
   spec.homepage      = "https://github.com/tdouce/remote_factory_girl"
   spec.license       = "MIT"
 
