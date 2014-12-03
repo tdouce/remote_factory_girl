@@ -15,7 +15,7 @@ module RemoteFactoryGirl
       @config = config
     end
 
-    def resource(resource) 
+    def resource(resource)
       resource.find(id)
     end
 

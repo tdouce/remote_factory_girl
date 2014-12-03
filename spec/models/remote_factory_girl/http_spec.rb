@@ -9,13 +9,13 @@ describe RemoteFactoryGirl::Http do
     let(:rest_client) { double('RestClient') }
 
     it 'should raise no host config errors' do
-      expect(config).to receive(:raise_if_host_not_set) 
+      expect(config).to receive(:raise_if_host_not_set)
       allow(rest_client).to receive(:post).with(config.home_url, params, content_type: :json, accept: :json).and_return(true)
       RemoteFactoryGirl::Http.post(config, params, rest_client)
     end
 
     it 'should send http request to home_url with params' do
-      expect(rest_client).to receive(:post).with(config.home_url, params, content_type: :json, accept: :json) 
+      expect(rest_client).to receive(:post).with(config.home_url, params, content_type: :json, accept: :json)
       allow(config).to receive(:raise_if_host_not_set)
       RemoteFactoryGirl::Http.post(config, params, rest_client)
     end

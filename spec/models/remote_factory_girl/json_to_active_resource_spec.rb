@@ -16,3 +16,4 @@ describe RemoteFactoryGirl::JsonToActiveResource do
     end
   end
 end
+
