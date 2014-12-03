@@ -44,7 +44,7 @@ module RemoteFactoryGirl
 
     private
 
-    def hyper_text_transfer_protocal 
+    def hyper_text_transfer_protocal
       https == true ? 'https' : 'http'
     end
 

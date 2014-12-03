@@ -1,7 +1,7 @@
 require 'dish'
 
 module RemoteFactoryGirl
-  class HashToDot 
+  class HashToDot
     def self.convert(json)
       Dish(json)
     end
