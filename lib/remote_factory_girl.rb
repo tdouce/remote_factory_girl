@@ -36,6 +36,12 @@ module RemoteFactoryGirl
     factory.factories(params, http).to_hash
   end
 
+  def self.create_list(factory_name, number_of_records, attributes = {}, opts = {config_applier: ConfigApplier, http: Http})
+    1.upto(number_of_records).map do |resource|
+      create(factory_name, attributes, opts[:config_applier], opts[:http])
+    end
+  end
+
   def self.create(factory_name, attributes = {}, config_applier = ConfigApplier, http = Http)
     config_for_remote = config(remotes_config.current_remote)
     factory = RemoteFactoryGirl.new(config_for_remote)

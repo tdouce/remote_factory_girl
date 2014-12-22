@@ -144,6 +144,22 @@ describe RemoteFactoryGirl do
     end
   end
 
+  describe '.create_list' do
+    before do
+      configure_remote_factory_girl(host: 'localhost',
+                                    port: 3000)
+    end
+
+    let(:user) { double('user') }
+
+    it 'should return 3 user resources' do
+      allow(RemoteFactoryGirl).to receive(:create).and_return(user)
+      users = RemoteFactoryGirl.create_list(:user, 3)
+
+      expect(users.length).to eq(3)
+    end
+  end
+
   describe '.create' do
     describe 'when not returning active resource object' do
       pending
